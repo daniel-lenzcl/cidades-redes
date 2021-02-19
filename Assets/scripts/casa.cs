@@ -25,7 +25,7 @@ public class casa : MonoBehaviour
 
             Instantiate(pessoa);
             //            Debug.Log("repos pessoa"+ i + " "+ pessoa.transform.position);
-            pessoa.transform.parent = this.transform;
+           // pessoa.transform.parent = this.transform;
         }
 
         if (pnc == 2) 

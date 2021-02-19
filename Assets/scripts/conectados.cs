@@ -33,7 +33,7 @@ public class conectados : MonoBehaviour
             //add the object to the list
             encontro.Add(other.gameObject);
             //         linhasRede.Add(new LineRenderer());
-            Instantiate(this.GetComponent<pessoa>().linha);
+//            Instantiate(this.GetComponent<pessoa>().linha);
         }
 
 

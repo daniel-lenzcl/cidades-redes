@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class pessoa : MonoBehaviour
 {
-    public GameObject linha;
+    //public GameObject linha;
     private Vector3 casa;
     private Vector3 trabalho;
     private Vector3 escola;
@@ -16,7 +16,7 @@ public class pessoa : MonoBehaviour
     private string dest;
     public List<GameObject> contatos = new List<GameObject>();
     private float tempo;
-    public List<LineRenderer> linhaContato = new List<LineRenderer>();
+//    public List<LineRenderer> linhaContato = new List<LineRenderer>();
 
 
 

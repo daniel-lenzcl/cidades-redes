@@ -64,12 +64,11 @@ public class levelgenerator : MonoBehaviour
             Destroy(g);
         }
 
-        Vector3 endtemp = new Vector3(0, 0, 0);
-        predios.Add(new Predios(casa, endtemp, 4));
+//        Vector3 endtemp = new Vector3(0, 0, 0);
+//        predios.Add(new Predios(casa, endtemp, 4));
         //if predios[0].tipoPredio
-        Instantiate(predios[0].tipoPredio);
+//        Instantiate(predios[0].tipoPredio);
 
-        //        GenerateObjects(enemy, numberOfEnemies);
         //      GenerateObjects(pessoa, numberOfPessoas);
         GenerateObjects(escola, numberOfEscolas);
         GenerateObjects(trabalho, numberOfTrabalhos);
@@ -93,7 +92,7 @@ public class levelgenerator : MonoBehaviour
 //            GameObject temporario = new GameObject (objt);
  //           objt.transform.position = randPoint;
    //         casa.Add(objt);
-            //Instantiate(go,randPoint,Quaternion.identity);
+            Instantiate(go,randPoint,Quaternion.identity);
 //            go.transform.parent = this.transform;
             //   Debug.Log("altura terreno: " + tempY);
 
@@ -113,7 +112,7 @@ public class levelgenerator : MonoBehaviour
 
         Vector3 novapos = new Vector3(x, tempY, z);
 
-        //CHECAR COMO SELECIONAR PONTO NAO REPETIDO, E FORA DE AREA JA OCUPADA POR OUTRO OBJETO. TVZ BOUNDS SEJA UMA ESTRATEGIA
+        //CHECAR COMO SELECIONAR PONTO NAO REPETIDO FORA DE AREA JA OCUPADA POR OUTRO OBJETO. TVZ BOUNDS SEJA UMA ESTRATEGIA
         if (usedPoints.Contains(novapos)) getRandPoint();
 //      foreach (GameObject limites in trabalhos)
 //       {
