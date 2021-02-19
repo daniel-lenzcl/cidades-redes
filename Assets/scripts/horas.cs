@@ -17,6 +17,8 @@ public class horas : MonoBehaviour
     float tpassado = 0f;
     Texture tex;
 
+    private bool rodadia;
+
     void Start()
     {
         hora = 0f;
@@ -25,38 +27,51 @@ public class horas : MonoBehaviour
         //   Debug.Log(" vamo ver");
         //       Debug.Log(DateTime.Now);
         tpassado = Time.deltaTime;
+
     }
 
     void Update()
     {
-        temporizador += Time.deltaTime;
-        //        Debug.Log("intervalo " + tempoSimulado);
-        //        Debug.Log("temporizador " + temporizador);
-        //        Debug.Log("tempo passado " + (temporizador - tpassado));
+        rodadia = GameObject.Find("Canvas").GetComponent<botao_dia>().comecaDia;
 
-        if (tempoSimulado < temporizador)
-        {
-            //            float tpassado = Time.deltaTime - temporizador;
-            //           Debug.Log("tempo passado " + tpassado);
-            //           Debug.Log("tempo andou");
-            temporizador = Time.deltaTime;
-            min++;
-            if (min > 59f)
+
+//        temporizador += Time.deltaTime * boolToFloat(rodadia);
+
+              if (rodadia)
+              {
+                  temporizador += Time.deltaTime;
+            Debug.Log("roda dia: " + rodadia);
+            //        Debug.Log("intervalo " + tempoSimulado);
+            //        Debug.Log("temporizador " + temporizador);
+            //        Debug.Log("tempo passado " + (temporizador - tpassado));
+
+            if (tempoSimulado < temporizador)
             {
-                min = 0f;
-                hora++;
-                if (hora > 23f) { hora = 0f; }
+                //            float tpassado = Time.deltaTime - temporizador;
+                //           Debug.Log("tempo passado " + tpassado);
+                //           Debug.Log("tempo andou");
+                temporizador = Time.deltaTime;
+                min++;
+                if (min > 59f)
+                {
+                    min = 0f;
+                    hora++;
+                    if (hora > 23f) { hora = 0f; }
+                }
             }
+            /*
+                    mexerhoras.localRotation = Quaternion.Euler(0f, DateTime.Now.Hour * angulohora, 0f);
+                    mexerminuto.localRotation = Quaternion.Euler(0f, DateTime.Now.Minute * angulomin, 0f);
+                    mexersegundo.localRotation = Quaternion.Euler(0f, DateTime.Now.Second * anguloseg, 0f);
+            */
+            //        mexerhoras.localRotation = Quaternion.Euler(0f, hora * angulohora, 0f);
+            //        mexerminuto.localRotation = Quaternion.Euler(0f, min * angulomin, 0f);
+            //        mexersegundo.localRotation = Quaternion.Euler(0f, DateTime.Now.Second * anguloseg, 0f);
+            //        as_hora.text = hora.ToString() + "h" + min.ToString();
+
         }
-        /*
-                mexerhoras.localRotation = Quaternion.Euler(0f, DateTime.Now.Hour * angulohora, 0f);
-                mexerminuto.localRotation = Quaternion.Euler(0f, DateTime.Now.Minute * angulomin, 0f);
-                mexersegundo.localRotation = Quaternion.Euler(0f, DateTime.Now.Second * anguloseg, 0f);
-        */
-        //        mexerhoras.localRotation = Quaternion.Euler(0f, hora * angulohora, 0f);
-        //        mexerminuto.localRotation = Quaternion.Euler(0f, min * angulomin, 0f);
-        //        mexersegundo.localRotation = Quaternion.Euler(0f, DateTime.Now.Second * anguloseg, 0f);
-//        as_hora.text = hora.ToString() + "h" + min.ToString();
+
+
     }
 
     void OnGUI()
