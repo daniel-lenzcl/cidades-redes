@@ -215,6 +215,8 @@ public class levelgenerator : MonoBehaviour
     {
         //        iniciaMapa();
 
+        Debug.Log("LEVEL-COLOCA PREDIOS: total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+
         switch (tipoDistribuicao)
         {
             case "aleatorio":
@@ -612,14 +614,26 @@ public class levelgenerator : MonoBehaviour
 
         Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando total de gente: " + todasAsPessoas.Count);
 
-//        Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando casa" + todasAsPessoas[1].identidade + " endereco" + todasAsPessoas[1].minhaCasa.enderecoXYZ);
-//        Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + todasAsPessoas[1].identidade + " endereco" + todasAsPessoas[1].minhaCasa.predioPreFab.transform.position);
+        //        Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando casa" + todasAsPessoas[1].identidade + " endereco" + todasAsPessoas[1].minhaCasa.enderecoXYZ);
+        //        Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + todasAsPessoas[1].identidade + " endereco" + todasAsPessoas[1].minhaCasa.predioPreFab.transform.position);
 
-        foreach(cPessoa tp in todasAsPessoas)
+        string nomedacasa;
+        Predios tempcasa;
+        Debug.Log("LEVEL-ATRIBUI PESSOAS: antes do foreach -> total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+        foreach (cPessoa tp in todasAsPessoas)
         {
-            Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + tp.identidade + " endereco"+tp.minhaCasa.nomePredio+ " " +tp.minhaCasa.enderecoXYZ + "trabalho: "+ tp.meuTrabalho.enderecoXYZ);
-      
-            Instantiate(tp.tipoPessoa, tp.minhaCasa.enderecoXYZ, Quaternion.identity);
+    //        Find((x) => x.name == someString)
+            nomedacasa = tp.minhaCasa.nomePredio;
+            //            tempcasa = predios.Find((x) => x.nomePredio == nomedacasa);
+//            Debug.Log("LEVEL-ATRIBUI PESSOAS: nome da casas" + nomedacasa + "total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+
+
+//            Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + tp.identidade + " endereco"+tp.minhaCasa.nomePredio+ " " +tp.minhaCasa.enderecoXYZ + "trabalho: "+ tp.meuTrabalho.enderecoXYZ);
+//            Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome predio " + tp.minhaCasa.nomePredio + " endereco" + endtemp);
+            //               geral.GetComponent<levelgenerator>().trabalho, tp.minhaCasa.nomePredio)
+            //                        asCasas.AddRange(predios.FindAll((x) => x.nomePredio.Contains("casa")));                   // tentando fazer sublist de list. .ADDRANGE resolveu a questao
+
+  //          Instantiate(tp.tipoPessoa, tp.minhaCasa.enderecoXYZ, Quaternion.identity);
         }
     }
 }

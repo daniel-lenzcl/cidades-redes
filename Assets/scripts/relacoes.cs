@@ -95,12 +95,13 @@ public class relacoes : MonoBehaviour
 
             //            casat = asCasas[(int)Mathf.PingPong(i, asCasas.Count - 1)];
             //            casat = asCasas[(int)Mathf.Floor(i*fracao)];
-            Debug.Log("RELACOES-B ATRIBUI RELACOES: nome das casas: " + indexCasa + "contapessoas casa: " + contapessoasCasa +
-                "\n                 nome dos trab: " + indexTrab + " conta pessoas trab: " + contapessoasTrab);
+//            Debug.Log("RELACOES-B ATRIBUI RELACOES: nome das casas: " + indexCasa + "contapessoas casa: " + contapessoasCasa +
+//                "\n                 nome dos trab: " + indexTrab + " conta pessoas trab: " + contapessoasTrab);
+//            Debug.Log("RELACOES-B ATRIBUI RELACOES: nome das casas: " + asCasas[indexCasa].nomePredio + "endereco casa: " + asCasas[indexCasa].enderecoXYZ);
             geral.GetComponent<levelgenerator>().todasAsPessoas.Add(new cPessoa(geral.GetComponent<levelgenerator>().prefabP, "pessoa" + i, asCasas[indexCasa], osTrabalhos[indexTrab]));
 //            index++;
         }
-        Debug.Log("RELACOES-B ATRIBUI RELACOES: contagem todasaspessoas: " + geral.GetComponent<levelgenerator>().todasAsPessoas.Count);
+        Debug.Log("RELACOES-B ATRIBUI RELACOES: contagem todasaspessoas: " + geral.GetComponent<levelgenerator>().todasAsPessoas.Count + "total de predios: "+ geral.GetComponent<levelgenerator>().predios.Count);
 
 
         gerarMapa.interactable = true;

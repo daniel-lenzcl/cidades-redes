@@ -74,8 +74,8 @@ public class Mapas : MonoBehaviour
 
     public void botaoMapa()
     {
-        Debug.Log("MAPAS - BOTAO MAPA:");
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+        Debug.Log("MAPAS - BOTAO MAPA ->comeco: contagem de predios: " + geral.GetComponent<levelgenerator>().predios.Count);
+//        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
         //        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCruz();
         //        GameObject.Find("Terrain").GetComponent<levelgenerator>().atribuiPessoas();
 //        "aleatorio", 
@@ -115,7 +115,7 @@ public class Mapas : MonoBehaviour
                 //          mapaCirculo();
                 break;
         }
-//        Debug.Log("testando aki");
+        Debug.Log("MAPAS - BOTAO MAPA ->final: contagem de predios: " + geral.GetComponent<levelgenerator>().predios.Count);
         geral.GetComponent<levelgenerator>().colocaPessoas();
 
     }
