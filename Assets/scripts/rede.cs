@@ -5,7 +5,8 @@ using UnityEngine;
 public class rede : MonoBehaviour
 {
     private GameObject centro;
-    private GameObject contato;
+    private List<GameObject> contato;
+
   //  public LineRenderer linhaContato;
 
     // Start is called before the first frame update

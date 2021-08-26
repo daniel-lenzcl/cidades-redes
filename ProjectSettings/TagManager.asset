@@ -8,6 +8,7 @@ TagManager:
   - pessoas
   - escolas
   - trabalho
+  - criancas
   layers:
   - Default
   - TransparentFX

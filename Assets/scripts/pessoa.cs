@@ -7,6 +7,11 @@ using UnityEngine.AI;
 public class pessoa : MonoBehaviour
 {
     //public GameObject linha;
+    //    private int id;
+    //    private List<int> encontros;
+    private List<string> nomePredios; 
+
+
     private Vector3 casa;
     private Vector3 trabalho;
     private Vector3 escola;
@@ -16,17 +21,46 @@ public class pessoa : MonoBehaviour
     private string dest;
     public List<GameObject> contatos = new List<GameObject>();
     private float tempo;
-//    public List<LineRenderer> linhaContato = new List<LineRenderer>();
+    //    public List<LineRenderer> linhaContato = new List<LineRenderer>();
 
+    //preparacao para selecao de destino por case e switch. pegar na CASA onde gera pessoa ou crianca dps, para ver o tipo de pessoa gerada.
+    private string[] tiposPessoa = { "jovem" };
+    private string tipoDaPessoa;
+    //private LineRenderer lRede = new LineRenderer();
+
+
+    //private string nome;
+    //    public pessoa (string nom)
+    //    {
+    //        this.nome = nom;
+    //    }
+    public int identidadepessoa;
+    private string sdest;
+    private cPessoa euPessoa;
 
 
     // Start is called before the first frame update
     void Start()
     {
-     //   contatos = new List<GameObject>();
+        GameObject geral = GameObject.Find("Terrain");
+
+        //   contatos = new List<GameObject>();
+        identidadepessoa = geral.GetComponent<levelgenerator>().contador;
+        geral.GetComponent<levelgenerator>().contador++;
+        this.name = "pessoa" + identidadepessoa.ToString();
+        euPessoa = geral.GetComponent<levelgenerator>().todasAsPessoas[identidadepessoa];//////////////////////////////////
+
+
+        //        identidadepessoa = geral.nomepessoa;
+        Debug.Log("PESSOA-START: nome da pessoa: " + identidadepessoa);
+
 
         jogador = this.GetComponent<NavMeshAgent>();
         GameObject[] trabalhos = GameObject.FindGameObjectsWithTag("trabalho");
+
+//        tipoDaPessoa = tiposPessoa[Random.Range(0, tiposPessoa.Length)];
+        tipoDaPessoa = "jovem";
+
 
         casa = this.transform.position;
         int num_trab = Random.Range(0, trabalhos.Length);
@@ -38,93 +72,98 @@ public class pessoa : MonoBehaviour
 
         //        Debug.Log("casa: " + casa + "    trabalho (" + num_trab + "): " + trabalho);
 
-
+        //    lRede = GetComponent<LineRenderer>();
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
-        tempo = GameObject.Find("Terrain").GetComponent<horas>().hora;
-     //   Debug.Log("horas: " + tempo);
-
-//        if (jogador.remainingDistance <= .5f)
-//        {
-            if (tempo == 2f) {
-            destino = trabalho;
-            jogador.stoppingDistance = 3f;
-        }
-        else if (tempo == 10f) { 
-            destino = casa;
-            jogador.stoppingDistance = 2f;
-        }
-        else if (tempo == 14f) { 
-            destino = trabalho;
-            jogador.stoppingDistance = 3f;
-        }
-        else if (tempo == 20f) { 
-            destino = casa;
-            jogador.stoppingDistance = 2f;
-        }
-        //       }
-        jogador.SetDestination(destino);   //DESCOBRIR PQ O TERRENO E A NAVMESH TA SE MEXENDO JUNTO COM O JOGADOR -  terreno estava com funcao de agente tb (o q significa funcao de agente tb?)
-
-
-        GameObject[] populacao = GameObject.FindGameObjectsWithTag("pessoas");
-        foreach (GameObject p in populacao)
+        bool rodadia = GameObject.Find("Terrain").GetComponent<horas>().rodadia;
+        if (rodadia)
         {
-            //  Debug.Log("contatos: " + contatos.Count);
 
-            //       if (Vector3.Distance(p.transform.position, this.transform.position) < 2) 
-            //      {
-            //         contatos.Add(p);
+            tempo = GameObject.Find("Terrain").GetComponent<horas>().hora;
+            //   Debug.Log("horas: " + tempo);
 
-            //            };
-            //Debug.Log("pessoa qq" + contatos.Count);
+            string t = "jovem";////////////////////////---------------argumento para uso de CASE variavel
 
-            if (contatos.Count > 0)
+            switch (tipoDaPessoa)
             {
+                case string a when a.Contains(t):
 
-                for (int i =0; i >contatos.Count; i++)
-                {
-          //          linhaContato[i].SetPosition(0, this.transform.position);
-          //          linhaContato[i].SetPosition(1, contatos[i].transform.position);
-                    Debug.Log("contato # " + i);
-                }
-//                foreach (GameObject c in contatos)
- //               {
+                    switch (tempo)
+                        {
+                            //private string[] dest = { "jardins", "alameda", "fonteLinear", "fonteCircular", "fonteFemininas", "coreto", "plataforma" };
+                            case 1:
+                                destino = trabalho;
+                                sdest = "trabalho";
+                                break;
+                            case 2:
+                                destino = casa;
+                                sdest = "casa";
+                                break;
+                            case 8:
+                                destino = trabalho;
+                                //registrando, como acessar via nome das paradas
+                                //
+                                //destino = GameObject.Find("fonteLinear").transform.position;
+                                sdest = "trabalho";
+                                break;
+                            case 15:
+                                destino = casa;
+                                sdest = "casa";
+                                break;
+                        }
 
-                    //TODA LINHA EH UM GAMEOBJECTO
-                    //ELA PRECISA SER CRIADA JUNTO COM CADA CONTATO NO Q EH FEITO
-                    //PROVAVELMENTE TEM UM SCRIPT PROPRIO DE ATUALIZACAO E MARCA AS 2 PONTAS
-                    //ALGO TIPO INSTANTIATE DENTRO DO CONECTADOS
-
-                    //fazer line renderer com cada C. verificar como atualizar, ele deve criar as novas linhas e elas ficam para sempre. 
-                    //                    new Vector3[2] ponto(this.transform.position, c.transform.position);
-                    //Vector3 [] ponto = new Vector3 (this.transform.position, c.transform.position);
-                    //this.GetComponent<LineRenderer>().SetPosition(0, this.transform.position);
-                    //this.GetComponent<LineRenderer>().SetPosition(1, other.transform.position);
-                    //  linhaContato.SetPosition(0, this.transform.position);
-                    // linhaContato.SetPosition(1, c.transform.position);
-                   // Instantiate(linha);
-
-                    // set the position
-                                       // linhaContato[c].SetPosition(0, this.transform.position);
-                                       //linhaContato[c].SetPosition(1, c.transform.position);
-
-
-                    // Debug.DrawRay(this.transform.position, c.transform.position, Color.white);
-
-                    //  Debug.Log("contatos: " + contatos.Count);
-
-   //             }
-                //            Debug.DrawRay(contact.point, contact.normal, Color.white);
+                    break;
 
             }
+/*
+            switch (tipoDaPessoa)
+            {
+                case "jovem":
+
+                    int[] rotina = { 2, 6, 8, 15 };
+
+                    if (tempo == rotina[0])
+                    {
+                        switch (tempo)
+                        {
+                            //private string[] dest = { "jardins", "alameda", "fonteLinear", "fonteCircular", "fonteFemininas", "coreto", "plataforma" };
+                            case 1:
+                                destino = trabalho;
+                                sdest = "trabalho";
+                                break;
+                            case 2:
+                                destino = casa;
+                                sdest = "casa";
+                                break;
+                            case 8:
+                                destino = trabalho;
+                                //registrando, como acessar via nome das paradas
+                                //
+                                //destino = GameObject.Find("fonteLinear").transform.position;
+                                sdest = "trabalho";
+                                break;
+                            case 15:
+                                destino = casa;
+                                sdest = "casa";
+                                break;
+                        }
+                    }
+
+                    break;
+
+            }
+*/
+            Debug.Log("PESSOA-UPDATE: pessoa " + identidadepessoa + " indo para " + sdest);
+            //--------acrescentar mudanca de destino aki para atualizacao.
+
+            jogador.SetDestination(destino);   //DESCOBRIR PQ O TERRENO E A NAVMESH TA SE MEXENDO JUNTO COM O JOGADOR -  terreno estava com funcao de agente tb (o q significa funcao de agente tb?)
+
+ 
+            
         }
-  //      Debug.Log("contatos: " + contatos);
-
-
     }
 }

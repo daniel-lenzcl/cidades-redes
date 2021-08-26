@@ -101,12 +101,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3367831186530481833}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2830cae599e05084dac54c99efbb63ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pessoa: {fileID: 8028960844592160978, guid: 831b4f806fbafbf41a095460ab39f747, type: 3}
-  numberOfPessoas: 3
+  maxPessoas: 0
   crianca: {fileID: 6520695279007890852, guid: afcda9395e4198b45a0ff1d318b93941, type: 3}
   numberOfCriancas: 2
+  nomepessoa: 0

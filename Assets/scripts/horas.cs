@@ -17,7 +17,7 @@ public class horas : MonoBehaviour
     float tpassado = 0f;
     Texture tex;
 
-    private bool rodadia;
+    public bool rodadia = true;
 
     void Start()
     {
@@ -27,20 +27,22 @@ public class horas : MonoBehaviour
         //   Debug.Log(" vamo ver");
         //       Debug.Log(DateTime.Now);
         tpassado = Time.deltaTime;
+        Debug.Log("HORAS - START: inicializado RODA DIA = " +rodadia);
 
     }
 
     void Update()
     {
-        rodadia = GameObject.Find("Canvas").GetComponent<botao_dia>().comecaDia;
+        //   rodadia = GameObject.Find("Canvas").GetComponent<botoes>().comecaDia;  -----------------> ESSE CONTROLE VEIO PRA UMA VARIAVEL DAKI
 
 
-//        temporizador += Time.deltaTime * boolToFloat(rodadia);
+        //        temporizador += Time.deltaTime * boolToFloat(rodadia);
+//        Debug.Log("HORAS - UPDATE: roda dia: " + rodadia);
 
-              if (rodadia)
+        if (rodadia)
               {
                   temporizador += Time.deltaTime;
-            Debug.Log("roda dia: " + rodadia);
+            //Debug.Log("roda dia: " + rodadia);
             //        Debug.Log("intervalo " + tempoSimulado);
             //        Debug.Log("temporizador " + temporizador);
             //        Debug.Log("tempo passado " + (temporizador - tpassado));
@@ -71,13 +73,24 @@ public class horas : MonoBehaviour
 
         }
 
+        as_hora.text = ("  " + hora + "h" + min);
+
 
     }
 
+/*
+    public void Sair()
+    {
+        Application.Quit();
+    }
+*/
+
+    /*
     void OnGUI()
     {
         GUILayout.Label(tex);
         GUILayout.Label(tex);
         GUILayout.Label("  " + hora + "h" + min);
     }
+*/
 }
