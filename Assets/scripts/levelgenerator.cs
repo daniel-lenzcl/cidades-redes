@@ -129,8 +129,8 @@ public class levelgenerator : MonoBehaviour
     public void iniciaMapa()
     {
 
-        setaListas("predios");
-        setaListas("enderecos");
+//        setaListas("predios");
+//        setaListas("enderecos");
 //        setaListas("pessoas");
 
 
@@ -245,7 +245,7 @@ public class levelgenerator : MonoBehaviour
         foreach (Predios p in predios)
         {
             Instantiate(p.predioPreFab, p.enderecoXYZ, Quaternion.identity);
-            //            Debug.Log("LEVEL-COLOCA PREDIOS: end instanciado " + p.enderecoXYZ);
+            Debug.Log("LEVEL-COLOCA PREDIOS: nome predio: "+ p.nomePredio + "endereco " + p.enderecoXYZ);
         }
 
     }
@@ -265,6 +265,8 @@ public class levelgenerator : MonoBehaviour
         GenerateObjects(escola, totalEscolas);
         GenerateObjects(trabalho, totalTrabalhos);
         GenerateObjects(casa, totalCasas);
+        Debug.Log("LEVEL - MAPA ALEATORIO: total de enderecos: "+ enderecos.Count);
+        colocaPredios();
 
     }
 
@@ -272,7 +274,8 @@ public class levelgenerator : MonoBehaviour
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
-        Debug.Log("LEVEL-MAPA MATRIZ: total de enderecos: " + predios.Count);
+        Debug.Log("LEVEL-MAPA MATRIZ: total de predios: " + predios.Count);
+        Debug.Log("LEVEL-MAPA MATRIZ: total de enderecos: " + enderecos.Count);
 
         int ladoX = (int)Mathf.Sqrt(predios.Count);
         int ladoZ = (int)(predios.Count / ladoX);
@@ -503,7 +506,6 @@ public class levelgenerator : MonoBehaviour
             //            Debug.Log("coordendas: " + posicao);
             //            Debug.Log("coordendas\n x: " + (indexX * passoX) + ", z: " + (indexZ * passoZ) + ", y: " + tempY);
 
-
             //           Instantiate(predios[i].tipoPredio, posicao, Quaternion.identity);
 
             if (i < ladoX)
@@ -535,6 +537,7 @@ public class levelgenerator : MonoBehaviour
     void GenerateObjects (GameObject go, int amount)
     {
 
+        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
 
         if (go == null) return;
         col = terrain.GetComponent<TerrainCollider>();
@@ -544,11 +547,15 @@ public class levelgenerator : MonoBehaviour
             Vector3 randPoint = getRandPoint();
             usedPoints.Add(randPoint);
             randPoint.y += go.transform.position.y;
-            Instantiate(go,randPoint,Quaternion.identity);
+//            Instantiate(go,randPoint,Quaternion.identity);
+            enderecos.Add(randPoint);
 
         }
+        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no fim: " + enderecos.Count);
+
+        //        colocaPredios();
     }
-    
+
     Vector3 getRandPoint()
     {
         //aki a nao sobreposicao ta precisa, o q permite q um obj entre dentro do outro. refazer de modo a nao criar mais obj dentro de outro
@@ -624,8 +631,8 @@ public class levelgenerator : MonoBehaviour
         {
     //        Find((x) => x.name == someString)
             nomedacasa = tp.minhaCasa.nomePredio;
-            //            tempcasa = predios.Find((x) => x.nomePredio == nomedacasa);
-//            Debug.Log("LEVEL-ATRIBUI PESSOAS: nome da casas" + nomedacasa + "total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+            tempcasa = predios.Find((x) => x.nomePredio == nomedacasa);
+            Debug.Log("LEVEL-ATRIBUI PESSOAS: nome da casas: " + nomedacasa + " nome predio: " + tempcasa.nomePredio + ", endereco: "+tempcasa.enderecoXYZ);// "endereco via predio:"+ tempcasa.enderecoXYZ);
 
 
 //            Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + tp.identidade + " endereco"+tp.minhaCasa.nomePredio+ " " +tp.minhaCasa.enderecoXYZ + "trabalho: "+ tp.meuTrabalho.enderecoXYZ);
@@ -633,7 +640,7 @@ public class levelgenerator : MonoBehaviour
             //               geral.GetComponent<levelgenerator>().trabalho, tp.minhaCasa.nomePredio)
             //                        asCasas.AddRange(predios.FindAll((x) => x.nomePredio.Contains("casa")));                   // tentando fazer sublist de list. .ADDRANGE resolveu a questao
 
-  //          Instantiate(tp.tipoPessoa, tp.minhaCasa.enderecoXYZ, Quaternion.identity);
+          Instantiate(tp.tipoPessoa, tp.minhaCasa.enderecoXYZ, Quaternion.identity);
         }
     }
 }

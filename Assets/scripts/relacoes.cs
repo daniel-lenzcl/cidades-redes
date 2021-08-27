@@ -30,10 +30,10 @@ public class relacoes : MonoBehaviour
 
     public void bAtribuiRelacoes()
     {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        //geral.GetComponent<levelgenerator>().setaListas("predios");
-        //geral.GetComponent<levelgenerator>().setaListas("enderecos");
+        geral.GetComponent<levelgenerator>().setaListas("predios");
+        geral.GetComponent<levelgenerator>().setaListas("enderecos");
         geral.GetComponent<levelgenerator>().setaListas("pessoas");
+        geral.GetComponent<levelgenerator>().iniciaMapa();
 
         for (int i = 0; i < geral.GetComponent<levelgenerator>().totalCasas; i++)
         {

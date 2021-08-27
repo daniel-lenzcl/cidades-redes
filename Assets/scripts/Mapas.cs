@@ -52,7 +52,6 @@ public class Mapas : MonoBehaviour
 //            Debug.Log("MAPAS - START: opcoes das distribuicoes");
         }
         geral.GetComponent<levelgenerator>().tipoDistribuicao = tiposDistribuicoes[0];
-
         ///////////////////////////////////////////////////FIM INICIALIZAR DROPDOWN DE TIPOS DE DISTRIBUICAO/////////////////////////////
 
 //        Debug.Log("MAPAS - START: final");
@@ -62,27 +61,28 @@ public class Mapas : MonoBehaviour
     {
 //        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
         tipoMapa = dropMapa.options[dropMapa.value].text;
-        Debug.Log("MAPAS-TIPO MAPA: o tipo eh:" + tipoMapa);
+        Debug.Log("MAPAS-SELECIONA TIPO MAPA: o tipo eh:" + tipoMapa);
     }
 
     public void selecionaDistribuicao(Dropdown dropDistribuicao)
     {
         geral.GetComponent<levelgenerator>().tipoDistribuicao = dropDistribuicao.options[dropDistribuicao.value].text;
         //string td
-        Debug.Log("LEVEL-DISTRIBUICAO ATIVIDADES: distribuicao eh:" +geral.GetComponent<levelgenerator>().tipoDistribuicao);
+        Debug.Log("MAPAS-SELECIONA DISTRIBUICAO ATIVIDADES: distribuicao eh:" +geral.GetComponent<levelgenerator>().tipoDistribuicao);
     }
 
     public void botaoMapa()
     {
         Debug.Log("MAPAS - BOTAO MAPA ->comeco: contagem de predios: " + geral.GetComponent<levelgenerator>().predios.Count);
-//        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+        geral.GetComponent<levelgenerator>().iniciaMapa();
+        geral.GetComponent<levelgenerator>().setaListas("enderecos");
         //        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCruz();
-        //        GameObject.Find("Terrain").GetComponent<levelgenerator>().atribuiPessoas();
-//        "aleatorio", 
-//            "matriz",
-//            "cruz",
-//            "linha",
-//            "circulo"
+        //        geral.GetComponent<levelgenerator>().atribuiPessoas();
+        //        "aleatorio", 
+        //            "matriz",
+        //            "cruz",
+        //            "linha",
+        //            "circulo"
 
         switch (tipoMapa)
         {
