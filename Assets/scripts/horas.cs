@@ -7,7 +7,7 @@ public class horas : MonoBehaviour
 {
     //    public Transform mexerhoras, mexerminuto, mexersegundo;
     public Text as_hora;
-    public float tempoSimulado = 1f;
+    public float tempoSimulado = .05f;
 
 
     public float hora;

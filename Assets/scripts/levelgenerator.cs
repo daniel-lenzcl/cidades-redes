@@ -632,7 +632,7 @@ public class levelgenerator : MonoBehaviour
     //        Find((x) => x.name == someString)
             nomedacasa = tp.minhaCasa.nomePredio;
             tempcasa = predios.Find((x) => x.nomePredio == nomedacasa);
-            Debug.Log("LEVEL-ATRIBUI PESSOAS: nome da casas: " + nomedacasa + " nome predio: " + tempcasa.nomePredio + ", endereco: "+tempcasa.enderecoXYZ);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+            Debug.Log("LEVEL-ATRIBUI PESSOAS: nome da pessoa: " + tp.identidade + " nome predio: " + tempcasa.nomePredio + ", endereco: "+tempcasa.enderecoXYZ);// "endereco via predio:"+ tempcasa.enderecoXYZ);
 
 
 //            Debug.Log("LEVEL-ATRIBUI PESSOAS: so perguntando nome " + tp.identidade + " endereco"+tp.minhaCasa.nomePredio+ " " +tp.minhaCasa.enderecoXYZ + "trabalho: "+ tp.meuTrabalho.enderecoXYZ);

@@ -37,34 +37,35 @@ public class pessoa : MonoBehaviour
     public int identidadepessoa;
     private string sdest;
     private cPessoa euPessoa;
-
+    private GameObject geral;
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject geral = GameObject.Find("Terrain");
+        geral = GameObject.Find("Terrain");
 
         //   contatos = new List<GameObject>();
         identidadepessoa = geral.GetComponent<levelgenerator>().contador;
         geral.GetComponent<levelgenerator>().contador++;
-        this.name = "pessoa" + identidadepessoa.ToString();
+        //this.name = "pessoa" + identidadepessoa.ToString();
         euPessoa = geral.GetComponent<levelgenerator>().todasAsPessoas[identidadepessoa];//////////////////////////////////
-
+        this.name = euPessoa.identidade;
 
         //        identidadepessoa = geral.nomepessoa;
-        Debug.Log("PESSOA-START: nome da pessoa: " + identidadepessoa);
+        Debug.Log("PESSOA-START: nome da pessoa: " + this.name);
 
 
         jogador = this.GetComponent<NavMeshAgent>();
-        GameObject[] trabalhos = GameObject.FindGameObjectsWithTag("trabalho");
+//        GameObject[] trabalhos = GameObject.FindGameObjectsWithTag("trabalho");
 
 //        tipoDaPessoa = tiposPessoa[Random.Range(0, tiposPessoa.Length)];
         tipoDaPessoa = "jovem";
 
-
-        casa = this.transform.position;
-        int num_trab = Random.Range(0, trabalhos.Length);
-        trabalho = trabalhos[num_trab].transform.position;
+        casa = euPessoa.minhaCasa.enderecoXYZ;
+        trabalho = euPessoa.meuTrabalho.enderecoXYZ;
+//        casa = this.transform.position;
+//        int num_trab = Random.Range(0, trabalhos.Length);
+//        trabalho = trabalhos[num_trab].transform.position;
 
         destino = casa;
         jogador.SetDestination(destino);
@@ -79,12 +80,16 @@ public class pessoa : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool rodadia = GameObject.Find("Terrain").GetComponent<horas>().rodadia;
+//        bool rodadia = GameObject.Find("Terrain").GetComponent<horas>().rodadia;
+        bool rodadia = geral.GetComponent<horas>().rodadia;
         if (rodadia)
         {
 
-            tempo = GameObject.Find("Terrain").GetComponent<horas>().hora;
+//            tempo = GameObject.Find("Terrain").GetComponent<horas>().hora;
+            tempo = geral.GetComponent<horas>().hora;
             //   Debug.Log("horas: " + tempo);
+            ////////////////////////////////////estrutura de destino poderia ser uma lista de destinos da classe. dai faria 'if' pra ver se deu a hora vigente, incrementa, e passa
+            ///////////////////////////////////para o proximo da lista. mas nao implementado ainda, pensar a respeito para outra versao (pos testes)
 
             string t = "jovem";////////////////////////---------------argumento para uso de CASE variavel
 
@@ -99,17 +104,17 @@ public class pessoa : MonoBehaviour
                                 destino = trabalho;
                                 sdest = "trabalho";
                                 break;
-                            case 2:
-                                destino = casa;
-                                sdest = "casa";
-                                break;
-                            case 8:
-                                destino = trabalho;
+//                            case 2:
+//                                destino = casa;
+//                                sdest = "casa";
+//                                break;
+//                            case 8:
+//                                destino = trabalho;
                                 //registrando, como acessar via nome das paradas
                                 //
                                 //destino = GameObject.Find("fonteLinear").transform.position;
-                                sdest = "trabalho";
-                                break;
+//                                sdest = "trabalho";
+//                                break;
                             case 15:
                                 destino = casa;
                                 sdest = "casa";
@@ -157,7 +162,7 @@ public class pessoa : MonoBehaviour
 
             }
 */
-            Debug.Log("PESSOA-UPDATE: pessoa " + identidadepessoa + " indo para " + sdest);
+            Debug.Log("PESSOA-UPDATE: pessoa " + this.name + " indo para " + sdest);
             //--------acrescentar mudanca de destino aki para atualizacao.
 
             jogador.SetDestination(destino);   //DESCOBRIR PQ O TERRENO E A NAVMESH TA SE MEXENDO JUNTO COM O JOGADOR -  terreno estava com funcao de agente tb (o q significa funcao de agente tb?)

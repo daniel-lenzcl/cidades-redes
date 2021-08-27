@@ -7,7 +7,7 @@ public class conectados : MonoBehaviour
 {
 
     //The list of colliders currently inside the trigger
-    List<GameObject> encontro;
+    public List<GameObject> encontro;
     public LineRenderer linhasRede;
     Vector3 pos0;
     Vector3 pos1;
@@ -19,7 +19,7 @@ public class conectados : MonoBehaviour
     public string quemVi = " ";
 //    public List<string> quemVi = new List<string>();
 
-    void Start()
+    public void Start()
     {
         encontro = this.GetComponent<pessoa>().contatos;
         encontro.Clear();

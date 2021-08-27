@@ -41,40 +41,63 @@ public class botoes : MonoBehaviour
         Application.Quit();
     }
 
-    public void botaoMapaAleatorio()
-    {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaAleatorio();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
-    }
+    /*
+        public void botaoMapaAleatorio()
+        {
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaAleatorio();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+        }
+    */
 
-    public void botaoMapaMatriz()
-    {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaMatriz();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+    /*
+        public void botaoMapaMatriz()
+        {
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaMatriz();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
 
-    }
+        }
+    */
 
-    public void botaoMapaLinha()
-    {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaLinha();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
-    }
+    /*
+        public void botaoMapaLinha()
+        {
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaLinha();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+        }
+    */
 
-    public void botaoMapaCirculo()
-    {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCirculo();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
-    }
+    /*
+        public void botaoMapaCirculo()
+        {
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCirculo();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+        }
+    */
 
-    public void botaoMapaCruz()
+    /*
+        public void botaoMapaCruz()
+        {
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCruz();
+            GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+        }
+    */
+    /// <summary>
+    /// /////////////////////////////////////dar um jeito de zerar a rede de contatos. provavelmente seja mais interessante criar uma matriz geral q faca a atualizacao
+    /// 
+    /// </summary>
+    public void botaoResetRede()
     {
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().iniciaMapa();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().mapaCruz();
-        GameObject.Find("Terrain").GetComponent<levelgenerator>().colocaPessoas();
+        GameObject [] individuos = GameObject.FindGameObjectsWithTag("pessoas");
+        foreach(GameObject p in individuos)
+        {
+            p.GetComponent<conectados>().encontro.Clear();
+            p.GetComponent<conectados>().quemEncontrei.Clear();
+        }
     }
 
     public void botaoListaRede()
