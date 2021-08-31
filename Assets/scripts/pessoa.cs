@@ -162,7 +162,7 @@ public class pessoa : MonoBehaviour
 
             }
 */
-            Debug.Log("PESSOA-UPDATE: pessoa " + this.name + " indo para " + sdest);
+//            Debug.Log("PESSOA-UPDATE: pessoa " + this.name + " indo para " + sdest);
             //--------acrescentar mudanca de destino aki para atualizacao.
 
             jogador.SetDestination(destino);   //DESCOBRIR PQ O TERRENO E A NAVMESH TA SE MEXENDO JUNTO COM O JOGADOR -  terreno estava com funcao de agente tb (o q significa funcao de agente tb?)

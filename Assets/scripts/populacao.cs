@@ -32,8 +32,8 @@ public class populacao: MonoBehaviour
         GameObject geral = GameObject.Find("Terrain");
         int dimensao = geral.GetComponent<levelgenerator>().contador;
 
-        GameObject testeNome = GameObject.Find("pessoa1");
-        Debug.Log("id da pessoa1 eh " + testeNome.GetComponent<pessoa>().identidadepessoa);
+//        GameObject testeNome = GameObject.Find("pessoa1");
+//        Debug.Log("id da pessoa1 eh " + testeNome.GetComponent<pessoa>().identidadepessoa);
 
         matriz = new float[dimensao, dimensao];
 

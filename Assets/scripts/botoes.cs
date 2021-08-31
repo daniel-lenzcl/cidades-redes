@@ -7,6 +7,8 @@ public class botoes : MonoBehaviour
 {
     public Text BotaoDia;
     public bool comecaDia = false;
+//    public GameObject[] individuos;
+
 
     // Start is called before the first frame update
     void Start()
@@ -88,15 +90,21 @@ public class botoes : MonoBehaviour
     */
     /// <summary>
     /// /////////////////////////////////////dar um jeito de zerar a rede de contatos. provavelmente seja mais interessante criar uma matriz geral q faca a atualizacao
-    /// 
+    ///                          tem q revisar na classe CONECTADOS como a coisa ta sendo feita. 
     /// </summary>
     public void botaoResetRede()
     {
-        GameObject [] individuos = GameObject.FindGameObjectsWithTag("pessoas");
-        foreach(GameObject p in individuos)
+        GameObject[] individuos = GameObject.FindGameObjectsWithTag("pessoas");
+
+//        GameObject[] individuos = GameObject.FindAll("pessoa");
+        Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas: " + individuos.Length);
+        foreach (GameObject p in individuos)
         {
+            Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(comeco): " + p.GetComponent<conectados>().quemEncontrei.Count);
             p.GetComponent<conectados>().encontro.Clear();
             p.GetComponent<conectados>().quemEncontrei.Clear();
+            p.GetComponent<conectados>().esbarrei = false;
+            Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(fim): " + p.GetComponent<conectados>().quemEncontrei.Count);
         }
     }
 
@@ -112,10 +120,10 @@ public class botoes : MonoBehaviour
             return;
         }
 
-        foreach (GameObject i in individuos)
-        {
-            i.GetComponent<conectados>().dizEncontros();
-        }
+//        foreach (GameObject i in individuos)
+//        {
+//            i.GetComponent<conectados>().dizEncontros();
+//        }
 
 
         GameObject.Find("Terrain").GetComponent<populacao>().matrizEncontros();

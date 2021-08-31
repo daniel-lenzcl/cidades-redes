@@ -15,6 +15,7 @@ public class cContatos
     public cContatos(GameObject quem, float time)
     {
         this.contato = quem;
+//        this.horacont += time;
         this.horacont = time;
     }
 }

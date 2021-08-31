@@ -2851,6 +2851,7 @@ MonoBehaviour:
   TXTtotalcasas: {fileID: 540957672}
   TXTtotaltrabalhos: {fileID: 1510734377}
   gerarMapa: {fileID: 711384493}
+  numeroCasas: {fileID: 0}
 --- !u!1 &1056166930
 GameObject:
   m_ObjectHideFlags: 0
@@ -5550,7 +5551,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1033243381}
-        m_MethodName: botaoSair
+        m_MethodName: botaoResetRede
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
