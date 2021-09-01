@@ -153,150 +153,71 @@ public class conectados : MonoBehaviour
     public void seraQueEncontrei(GameObject Ooutro)
     {
 //        if (esbarrei) { return; }
-        Debug.Log("CONECTADOS - SERA Q ENCONTREI: " + esbarrei);
 //        esbarrei = !esbarrei;
-        Debug.Log("CONECTADOS - SERA Q ENCONTREI: esbarrei em alguem: " + Ooutro.name);
-
-        bool tp = false;
-        cContatos tempcont = new cContatos(Ooutro.gameObject, 1);
-        string tempquemVi = tempcont.contato.GetComponent<pessoa>().identidadepessoa.ToString();
-      
-
-        if (!quemEncontrei.Contains(tempcont))
-        {
-            quemEncontrei.Add(tempcont);
-            quemVi += tempquemVi + " ";
-
-            Debug.Log("CONECTADOS - SERA Q ENCONTREI: " + tempquemVi + " foi meu 1o encontro");
-            return;
-        }
-        else
-        {
-            int indexcontato = quemEncontrei.IndexOf(tempcont);
-            quemEncontrei[indexcontato].horacont++;
-            Debug.Log("CONECTADOS - SERA Q ENCONTREI: ja vi os seguinte: " + quemVi + "vi agora o" + tempquemVi);
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        esbarrei = !esbarrei;
-        Debug.Log("CONECTADOS: TRIGGER EXIT: " + esbarrei);
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("CONECTADOS: TRIGGER ENTER ");
-        seraQueEncontrei(other.gameObject);
-
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (esbarrei) { return; }
-        Debug.Log("CONECTADOS: TRIGGER STAY");
-        seraQueEncontrei(other.gameObject);
-//        return;
-
-//        if (esbarrei) { return; }
-//        Debug.Log("CONECTADOS: TRIGGER STAY: " + esbarrei);
-//        esbarrei = !esbarrei;
-//                    Debug.Log("CONECTADOS: esbarrei em alguem: " + other.name);
-
-        //        if (!other.CompareTag("pessoas"))
-        //        {
-        //            Debug.Log("CONECTADOS: esbarrei em uma nao pessoa: " + other.name);
-        //            return;
-        //        }
-        //--------tava dando erro por COLIDIR com objetos q nao fossem pessoa, resolvido ao checar pela tag se eh pessoa ou nao.
-        /////////////////////////////////////////----------PREPARAR A ROTINA DE COMPARACAO E ADICAO A PARTIR DOS cCONTATOS--------------------------------------------
+//        Debug.Log("CONECTADOS - SERA Q ENCONTREI: esbarrei em alguem: " + Ooutro.name);
 
 //        bool tp = false;
-//        cContatos tempcont = new cContatos(other.gameObject, 1);// Time.time);
-        //////////////////////////////////verificar como fazer o registro do tempo. o q se quer eh q os encontros mais frequentes tenham valores mais altos.
-        
+        cContatos tempcont = new cContatos(Ooutro.gameObject, 1);
+        string tempquemVi = tempcont.contato.GetComponent<pessoa>().identidadepessoa.ToString();
 
-        //Debug.Log("CONECTADOS: eu, "+ this.GetComponent<pessoa>().identidadepessoa + ", ja encontrei " + quemEncontrei.Count + "pessoas");
- //       Debug.Log("CONECTADOS: esbarrei agora no " + tempcont.contato.GetComponent<pessoa>().identidadepessoa);
- //       string tempquemVi = tempcont.contato.GetComponent<pessoa>().identidadepessoa.ToString();
-        //-----------------checar aki pq ta dando esse nessa linha de cima. as vezes da erro, as vezes nao-> erro pq era crianca, e portanto, nao tinha identidade e etc---------
-        /*
-        if (quemEncontrei.Count == 0)
-        {
-            quemEncontrei.Add(tempcont);
-            quemVi += tempquemVi + " ";
-        
-            //Debug.Log("CONECTADOS: " + tempquemVi + " foi meu 1o encontro");
-            //Debug.Log("CONECTADOS: ja vi os seguinte: " + quemVi);
-            return;
-        }
-        */
+        int idxcontato = quemEncontrei.IndexOf(tempcont);
 
- //       if (!quemEncontrei.Contains(tempcont))
- //       {
- //           quemEncontrei.Add(tempcont);
- //           quemVi += tempquemVi + " ";
 
-//            Debug.Log("CONECTADOS: " + tempquemVi + " foi meu 1o encontro");
+        Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o" + tempquemVi +"o index de quem encontrei agora eh: "+ idxcontato);
+
+        /// sera q eh melhor colocar a cContatos com .Listcontato<string>   ou inves de list <cContatos>?
+        /// 
+        //        osTrabalhos.AddRange(geral.GetComponent<levelgenerator>().predios.FindAll((x) => x.nomePredio.Contains("trabalho")));   
+        // tentando fazer sublist de list. .ADDRANGE resolveu a questao
+        //string teste50 = quemEncontrei.Find((x) => x.contato.GetComponent<pessoa>().identidadepessoa(tempquemVi));
+        //bool teste50 = quemEncontrei.Contains(tempcont.contato);
+        bool teste51 = quemEncontrei.Contains(tempcont);
+
+
+        Debug.Log("testando encontrar com .contains, resultado  so o x :" +teste51);
+
+        dizEncontros();
+
+//        if (!quemEncontrei.Contains(tempcont))
+//        {
+//            quemEncontrei.Add(tempcont);
+//            quemVi += tempquemVi + " ";
+
+//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o " + tempquemVi + " pela 1a vez");
 //            return;
 //        }
 //        else
 //        {
 //            int indexcontato = quemEncontrei.IndexOf(tempcont);
-//            quemEncontrei[indexcontato].horacont++;
-//            Debug.Log("CONECTADOS: ja vi os seguinte: " + quemVi + "vi agora o" + tempquemVi);
+//            quemEncontrei[indexcontato].horacont = quemEncontrei[indexcontato].horacont + 1;
+//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: ja eh a " + quemEncontrei[indexcontato].horacont +"que vi o" + tempquemVi);
 //        }
 
-        /*
-        foreach (cContatos c in quemEncontrei)
-        {
-            bool testepertenca = (c.contato == other.gameObject);
-
-        //    Debug.Log("CONECTADOS: eu, " + this.GetComponent<pessoa>().identidadepessoa + ", procurando se ja encontrei " + tempcont.contato.GetComponent<pessoa>().identidadepessoa);
-        //    if (testepertenca)
-        //    {Debug.Log("CONECTADOS: eu, " + this.GetComponent<pessoa>().identidadepessoa + ", ja encontrei o " + tempcont.contato.GetComponent<pessoa>().identidadepessoa);}
-        //    else{Debug.Log("CONECTADOS: eu, " + this.GetComponent<pessoa>().identidadepessoa + ", NAO tinha encontrado o " + tempcont.contato.GetComponent<pessoa>().identidadepessoa);}
-
-            tp = tp | testepertenca;
-        }
-
-        bool testetp = quemEncontrei.Contains(tempcont);
-        Debug.Log("CONECTADOS TESTANDO CONTAINS: teste tp = " + testetp);
-        Debug.Log("CONECTADOS TESTANDO CONTAINS: TP = " + tp);
-
-
-        if (!tp)
-        {
-
-            quemEncontrei.Add(tempcont);
-            quemVi += tempquemVi + " ";
-            //        int comprimento = quemEncontrei.Count - 1;
-            //        Debug.Log("quem encontrei " + quemEncontrei[comprimento].contato.GetComponent<pessoa>().identidadepessoa);
-            //Debug.Log("CONECTADOS: eu, "+ this.GetComponent<pessoa>().identidadepessoa + ", acabei de encontrar o " + tempquemVi);
-            //Debug.Log("CONECTADOS: ja vi os seguinte: " + quemVi);
-
-        }
-        else
-        {
-        //    c.horacont++;   
-        }
-        */
-
-        /////////////////////////////////////////----------PREPARAR A ROTINA DE COMPARACAO E ADICAO A PARTIR DOS cCONTATOS--------------------------------------------
-
-        //if the object is not already in the list
-        //------------------TIRANDO A PARTE FEITA NO 'ENCONTRO' PRA JOGAR PRA CLASSE CONTATOS
-        /*
-        if (!encontro.Contains(other.gameObject))
-
-        {
-            //add the object to the list
-            encontro.Add(other.gameObject);
-            //         linhasRede.Add(new LineRenderer());
-            //            Instantiate(this.GetComponent<pessoa>().linha);
-        }
-        Debug.Log("CONECTADOS: pessoa " + this.GetComponent<pessoa>().identidadepessoa + ",  total encontros " + encontro.Count + " total pontos linha " + pontosLinha.Count);
-        */
+//        Debug.Log("CONECTADOS - SERA Q ENCONTREI: final da rotina");
+//        dizEncontros();
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        esbarrei = !esbarrei;
+//        Debug.Log("CONECTADOS: TRIGGER EXIT: " + esbarrei);
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+//        Debug.Log("CONECTADOS: TRIGGER ENTER ");
+        seraQueEncontrei(other.gameObject);
+//        this.ResetTrigger;
+
+    }
+
+//    private void OnTriggerStay(Collider other)
+//    {
+//        if (esbarrei) { return; }
+//        Debug.Log("CONECTADOS: TRIGGER STAY");
+//        seraQueEncontrei(other.gameObject);
+//        esbarrei = !esbarrei;
+//        return;
+//     }
 }

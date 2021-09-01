@@ -100,12 +100,15 @@ public class botoes : MonoBehaviour
         Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas: " + individuos.Length);
         foreach (GameObject p in individuos)
         {
-            Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(comeco): " + p.GetComponent<conectados>().quemEncontrei.Count);
+//            Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(comeco): " + p.GetComponent<conectados>().quemEncontrei.Count);
             p.GetComponent<conectados>().encontro.Clear();
             p.GetComponent<conectados>().quemEncontrei.Clear();
             p.GetComponent<conectados>().esbarrei = false;
-            Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(fim): " + p.GetComponent<conectados>().quemEncontrei.Count);
+            p.GetComponent<Collider>().enabled = false;
+            p.GetComponent<Collider>().enabled = true;
+  //          Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(fim): " + p.GetComponent<conectados>().quemEncontrei.Count);
         }
+        GameObject.Find("Terrain").GetComponent<populacao>().matrizEncontros();
     }
 
     public void botaoListaRede()

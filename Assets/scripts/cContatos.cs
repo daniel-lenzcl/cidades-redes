@@ -6,6 +6,8 @@ public class cContatos
 {
     public GameObject contato;
     public float horacont;
+//    public List<string> contato;
+//    public List<float> vezesEncontro;
 
 
     public cContatos()
