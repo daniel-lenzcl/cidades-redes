@@ -51,7 +51,7 @@ public class populacao: MonoBehaviour
         foreach (GameObject i in individuos)
         {
 
-            vertices_individuos += (i.GetComponent<pessoa>().identidadepessoa +1)+ " \"" +   i.name.ToString() +"\"\n";
+            vertices_individuos += (i.GetComponent<pessoa>().identidadepessoa +1)+ " \"" +   i.name.ToString() +"\"% " + i.GetComponent<pessoa>().euPessoa.minhaCasa.nomePredio + " "+ i.GetComponent<pessoa>().euPessoa.meuTrabalho.nomePredio + "\n";
             int mx = i.GetComponent<pessoa>().identidadepessoa;
             listaC = i.GetComponent<conectados>().quemEncontrei;
             foreach(cContatos l in listaC)
@@ -91,19 +91,27 @@ public class populacao: MonoBehaviour
     {
         //endereco do arquivo
         string path = @"C:\Users\danie\gdrive prourb\PASTA academica\@UFRJ\doutorado\analise de redes\redes geradas";
+
+        //data para cabecalho
+        string dia = System.DateTime.Now.ToString("HH_mm_ss dd-MM-yy");
         //criando o arquivo
-        if (!File.Exists(path))
-        {
-            path += "/teste" + numeroTestes + ".net";
-            File.WriteAllText(path, "*vertices "+ individuos.Length.ToString() + "\n");
-            numeroTestes++;
-        }
-        else
-        {
-            path += "/teste" + numeroTestes + ".net";
-            File.WriteAllText(path, "*vertices " + individuos.Length.ToString() + "\n");
-            numeroTestes++;
-        }
+        path += "/simulacao" + dia + ".net";
+        File.WriteAllText(path, "*vertices " + individuos.Length.ToString() + "% " + GameObject.Find("Terrain").GetComponent<horas>().as_hora.text+"\n");
+
+        /*        
+                if (!File.Exists(path))
+                {
+                    path += "/teste" + numeroTestes + ".net";
+                    File.WriteAllText(path, "*vertices "+ individuos.Length.ToString() + "\n");
+                    numeroTestes++;
+                }
+                else
+                {
+                    path += "/teste" + numeroTestes + ".net";
+                    File.WriteAllText(path, "*vertices " + individuos.Length.ToString() + "\n");
+                    numeroTestes++;
+                }
+        */
 
         //conteudo do arquivo ---- ja usando o q ta escrito na variavel matriz+texto
         //cabecalho e verticies

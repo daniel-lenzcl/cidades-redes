@@ -35,6 +35,10 @@ public class Mapas : MonoBehaviour
 //            Debug.Log("MAPAS - START: opcoes dos tipos");
         }
         tipoMapa = tiposMapas[0];
+        Debug.Log("MAPAS START: tipo de mapa: " + tiposMapas[0]);
+        drpMapa.Label.text = "aleatorio";
+//        tipoMapa = dropMapa.options[dropMapa.value].text;
+
         ///////////////////////////////////////////////////FIM INICIALIZAR DROPDOWN DE TIPOS DE MAPA/////////////////////////////
 
         ///////////////////////////////////////////////////INICIALIZAR DROPDOWN DE TIPOS DE DISTRIBUICAO/////////////////////////////
@@ -52,9 +56,11 @@ public class Mapas : MonoBehaviour
 //            Debug.Log("MAPAS - START: opcoes das distribuicoes");
         }
         geral.GetComponent<levelgenerator>().tipoDistribuicao = tiposDistribuicoes[0];
+        Debug.Log("MAPAS START: distribuicao: " + tiposDistribuicoes[0]);
+
         ///////////////////////////////////////////////////FIM INICIALIZAR DROPDOWN DE TIPOS DE DISTRIBUICAO/////////////////////////////
 
-//        Debug.Log("MAPAS - START: final");
+        //        Debug.Log("MAPAS - START: final");
     }
 
     public void selecionaMapa(Dropdown dropMapa)
@@ -117,6 +123,8 @@ public class Mapas : MonoBehaviour
         }
         Debug.Log("MAPAS - BOTAO MAPA ->final: contagem de predios: " + geral.GetComponent<levelgenerator>().predios.Count);
         geral.GetComponent<levelgenerator>().colocaPessoas();
+        GameObject.Find("Terrain").GetComponent<horas>().Start();
+
 
     }
 

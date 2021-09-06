@@ -17,7 +17,7 @@ public class levelgenerator : MonoBehaviour
     public List<Predios> predios;
     public List<Vector3> enderecos;
     public List<cPessoa> todasAsPessoas;
-    public string tipoDistribuicao = "aleatorio";
+    public string tipoDistribuicao;// = "aleatorio";
     public List<cPessoa> tempPessoas;
 
 

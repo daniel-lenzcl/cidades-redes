@@ -109,6 +109,7 @@ public class botoes : MonoBehaviour
   //          Debug.Log("BOTOES-BOTAO reset REDE: total de pessoas(fim): " + p.GetComponent<conectados>().quemEncontrei.Count);
         }
         GameObject.Find("Terrain").GetComponent<populacao>().matrizEncontros();
+        GameObject.Find("Terrain").GetComponent<horas>().Start();
     }
 
     public void botaoListaRede()

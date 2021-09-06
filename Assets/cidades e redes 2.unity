@@ -3651,11 +3651,11 @@ RectTransform:
   m_Father: {fileID: 205881898}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 110, y: 30}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -40, y: -10}
+  m_SizeDelta: {x: 150, y: 30}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1298868915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3682,13 +3682,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00h
+  m_Text: 0d 00h00
 --- !u!222 &1298868916
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5123,9 +5123,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   as_hora: {fileID: 1298868915}
+  os_dia: {fileID: 0}
   tempoSimulado: 0.01
   hora: 0
   min: 0
+  dias: 0
   rodadia: 0
 --- !u!54 &1849834536
 Rigidbody:

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+//using System.Linq;
+//using System.Data.Entity;
 
 public class conectados : MonoBehaviour
 {
@@ -17,6 +19,8 @@ public class conectados : MonoBehaviour
     public List<cContatos> quemEncontrei = new List<cContatos>();
     public cContatos testando;
     public string quemVi = " ";
+
+   
     //    public List<string> quemVi = new List<string>();
 
     public bool esbarrei = false;  
@@ -152,49 +156,51 @@ public class conectados : MonoBehaviour
     /// <param name="Ooutro"></param>
     public void seraQueEncontrei(GameObject Ooutro)
     {
-//        if (esbarrei) { return; }
-//        esbarrei = !esbarrei;
-//        Debug.Log("CONECTADOS - SERA Q ENCONTREI: esbarrei em alguem: " + Ooutro.name);
+        //        if (esbarrei) { return; }
+        //        esbarrei = !esbarrei;
+        //        Debug.Log("CONECTADOS - SERA Q ENCONTREI: esbarrei em alguem: " + Ooutro.name);
 
-//        bool tp = false;
+        //        bool tp = false;
+
+        //testes q deram quase certo tao aki
+        //    if (quemEncontrei.Exists(x => x.contato == tempcont.contato)) 
+        //cContatos teste51 = quemEncontrei.Find(x => x.contato == tempcont.contato);
+        //int teste52 = quemEncontrei.IndexOf(quemEncontrei.Find(x => x.contato == tempcont.contato));
+        //Debug.Log("testando encontrar com INDEX OF . FIND x=> x.contat, antes:" + teste52);
+
+        //quemEncontrei.Add(tempcont);
+
+        //        teste51 = quemEncontrei.Find (x => x.contato == tempcont.contato);
+        //teste52 = quemEncontrei.IndexOf(quemEncontrei.Find(x => x.contato == tempcont.contato));
+
+        //Debug.Log("testando encontrar com INDEX OF . FIND x=> x.contat, DEPOIS:" + teste52);
+        //        Debug.Log("testando encontrar com EXISTS x=> x.contat, antes:" + quemEncontrei.IndexOf(teste51));
+        // teste51 = quemEncontrei.Contains(tempcont);
+        //Debug.Log("testando encontrar com CONTAINS, depois:" + teste51);
+
         cContatos tempcont = new cContatos(Ooutro.gameObject, 1);
         string tempquemVi = tempcont.contato.GetComponent<pessoa>().identidadepessoa.ToString();
+        int idxcontato = quemEncontrei.IndexOf(quemEncontrei.Find(x => x.contato == tempcont.contato));
 
-        int idxcontato = quemEncontrei.IndexOf(tempcont);
-
-
-        Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o" + tempquemVi +"o index de quem encontrei agora eh: "+ idxcontato);
-
-        /// sera q eh melhor colocar a cContatos com .Listcontato<string>   ou inves de list <cContatos>?
-        /// 
-        //        osTrabalhos.AddRange(geral.GetComponent<levelgenerator>().predios.FindAll((x) => x.nomePredio.Contains("trabalho")));   
-        // tentando fazer sublist de list. .ADDRANGE resolveu a questao
-        //string teste50 = quemEncontrei.Find((x) => x.contato.GetComponent<pessoa>().identidadepessoa(tempquemVi));
-        //bool teste50 = quemEncontrei.Contains(tempcont.contato);
-        bool teste51 = quemEncontrei.Contains(tempcont);
-
-
-        Debug.Log("testando encontrar com .contains, resultado  so o x :" +teste51);
-
-        dizEncontros();
-
-//        if (!quemEncontrei.Contains(tempcont))
-//        {
-//            quemEncontrei.Add(tempcont);
-//            quemVi += tempquemVi + " ";
-
-//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o " + tempquemVi + " pela 1a vez");
-//            return;
-//        }
-//        else
-//        {
-//            int indexcontato = quemEncontrei.IndexOf(tempcont);
-//            quemEncontrei[indexcontato].horacont = quemEncontrei[indexcontato].horacont + 1;
-//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: ja eh a " + quemEncontrei[indexcontato].horacont +"que vi o" + tempquemVi);
-//        }
-
-//        Debug.Log("CONECTADOS - SERA Q ENCONTREI: final da rotina");
+//        Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o" + tempquemVi +"o index de quem encontrei agora eh: "+ idxcontato);
 //        dizEncontros();
+
+        if (idxcontato < 0)
+        {
+            quemEncontrei.Add(tempcont);
+            quemVi += tempquemVi + " ";
+//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: encontrei o " + tempquemVi + " pela 1a vez");
+//            dizEncontros();
+
+        }
+        else
+        {
+            quemEncontrei[idxcontato].horacont++;// = quemEncontrei[indexcontato].horacont + 1;
+            quemVi += tempquemVi + " ";
+//            Debug.Log("CONECTADOS - SERA Q ENCONTREI: ja eh a " + quemEncontrei[idxcontato].horacont + "que vi o" + tempquemVi);
+//            dizEncontros();
+        }
+
     }
 
     private void OnTriggerExit(Collider other)

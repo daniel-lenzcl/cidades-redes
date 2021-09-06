@@ -7,11 +7,13 @@ public class horas : MonoBehaviour
 {
     //    public Transform mexerhoras, mexerminuto, mexersegundo;
     public Text as_hora;
+    public Text os_dia;
     public float tempoSimulado = .05f;
 
 
     public float hora;
     public float min;
+    public float dias;
     //    float temposim = 0.5f;
     float temporizador = 0f;
     float tpassado = 0f;
@@ -19,14 +21,16 @@ public class horas : MonoBehaviour
 
     public bool rodadia = true;
 
-    void Start()
+    public void Start()
     {
         hora = 0f;
         min = 0f;
+        dias = 0f;
         //        Debug.Log(DateTime.Now);
         //   Debug.Log(" vamo ver");
         //       Debug.Log(DateTime.Now);
         tpassado = Time.deltaTime;
+        rodadia = false;
         Debug.Log("HORAS - START: inicializado RODA DIA = " +rodadia);
 
     }
@@ -58,7 +62,11 @@ public class horas : MonoBehaviour
                 {
                     min = 0f;
                     hora++;
-                    if (hora > 23f) { hora = 0f; }
+                    if (hora > 23f) 
+                    { 
+                        hora = 0f;
+                        dias++;
+                    }
                 }
             }
             /*
@@ -72,18 +80,19 @@ public class horas : MonoBehaviour
             //        as_hora.text = hora.ToString() + "h" + min.ToString();
 
         }
+//        os_dia.text = (dias+"d");
+//        as_hora.text = (hora + "h" + min.ToString("00"));
 
-        as_hora.text = ("  " + hora + "h" + min);
-
+        as_hora.text = (dias+"d " + hora.ToString("00") + "h" + min.ToString("00"));
 
     }
 
-/*
-    public void Sair()
-    {
-        Application.Quit();
-    }
-*/
+    /*
+        public void Sair()
+        {
+            Application.Quit();
+        }
+    */
 
     /*
     void OnGUI()

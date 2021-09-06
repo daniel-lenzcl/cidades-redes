@@ -35,8 +35,8 @@ public class pessoa : MonoBehaviour
     //        this.nome = nom;
     //    }
     public int identidadepessoa;
-    private string sdest;
-    private cPessoa euPessoa;
+//    private string sdest;
+    public cPessoa euPessoa;
     private GameObject geral;
 
     // Start is called before the first frame update
@@ -47,19 +47,18 @@ public class pessoa : MonoBehaviour
         //   contatos = new List<GameObject>();
         identidadepessoa = geral.GetComponent<levelgenerator>().contador;
         geral.GetComponent<levelgenerator>().contador++;
-        //this.name = "pessoa" + identidadepessoa.ToString();
         euPessoa = geral.GetComponent<levelgenerator>().todasAsPessoas[identidadepessoa];//////////////////////////////////
         this.name = euPessoa.identidade;
 
         //        identidadepessoa = geral.nomepessoa;
-        Debug.Log("PESSOA-START: nome da pessoa: " + this.name);
+//        Debug.Log("PESSOA-START: nome da pessoa: " + this.name);
 
 
         jogador = this.GetComponent<NavMeshAgent>();
 //        GameObject[] trabalhos = GameObject.FindGameObjectsWithTag("trabalho");
 
 //        tipoDaPessoa = tiposPessoa[Random.Range(0, tiposPessoa.Length)];
-        tipoDaPessoa = "jovem";
+        tipoDaPessoa = "jovem"; //APESAR DE EXISTIR, NAO ESTA SENDO COLOCADO EM USO
 
         casa = euPessoa.minhaCasa.enderecoXYZ;
         trabalho = euPessoa.meuTrabalho.enderecoXYZ;
@@ -102,7 +101,7 @@ public class pessoa : MonoBehaviour
                             //private string[] dest = { "jardins", "alameda", "fonteLinear", "fonteCircular", "fonteFemininas", "coreto", "plataforma" };
                             case 1:
                                 destino = trabalho;
-                                sdest = "trabalho";
+//                                sdest = "trabalho";
                                 break;
 //                            case 2:
 //                                destino = casa;
@@ -117,7 +116,7 @@ public class pessoa : MonoBehaviour
 //                                break;
                             case 15:
                                 destino = casa;
-                                sdest = "casa";
+//                                sdest = "casa";
                                 break;
                         }
 

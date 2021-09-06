@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class cContatos
 {
     public GameObject contato;
-    public float horacont;
+    public  float horacont;
 //    public List<string> contato;
 //    public List<float> vezesEncontro;
 
