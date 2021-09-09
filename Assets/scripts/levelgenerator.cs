@@ -215,7 +215,7 @@ public class levelgenerator : MonoBehaviour
     {
         //        iniciaMapa();
 
-        Debug.Log("LEVEL-COLOCA PREDIOS: total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+//        Debug.Log("LEVEL-COLOCA PREDIOS: total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
 
         switch (tipoDistribuicao)
         {
@@ -245,7 +245,7 @@ public class levelgenerator : MonoBehaviour
         foreach (Predios p in predios)
         {
             Instantiate(p.predioPreFab, p.enderecoXYZ, Quaternion.identity);
-            Debug.Log("LEVEL-COLOCA PREDIOS: nome predio: "+ p.nomePredio + "endereco " + p.enderecoXYZ);
+//            Debug.Log("LEVEL-COLOCA PREDIOS: nome predio: "+ p.nomePredio + "endereco " + p.enderecoXYZ);
         }
 
     }
@@ -265,7 +265,7 @@ public class levelgenerator : MonoBehaviour
         GenerateObjects(escola, totalEscolas);
         GenerateObjects(trabalho, totalTrabalhos);
         GenerateObjects(casa, totalCasas);
-        Debug.Log("LEVEL - MAPA ALEATORIO: total de enderecos: "+ enderecos.Count);
+//        Debug.Log("LEVEL - MAPA ALEATORIO: total de enderecos: "+ enderecos.Count);
         colocaPredios();
 
     }
@@ -274,8 +274,8 @@ public class levelgenerator : MonoBehaviour
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
-        Debug.Log("LEVEL-MAPA MATRIZ: total de predios: " + predios.Count);
-        Debug.Log("LEVEL-MAPA MATRIZ: total de enderecos: " + enderecos.Count);
+//        Debug.Log("LEVEL-MAPA MATRIZ: total de predios: " + predios.Count);
+//        Debug.Log("LEVEL-MAPA MATRIZ: total de enderecos: " + enderecos.Count);
 
         int ladoX = (int)Mathf.Sqrt(predios.Count);
         int ladoZ = (int)(predios.Count / ladoX);
@@ -345,7 +345,7 @@ public class levelgenerator : MonoBehaviour
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
-        Debug.Log("LEVEL-MAPA LINHA: total de enderecos: " + predios.Count);
+//        Debug.Log("LEVEL-MAPA LINHA: total de enderecos: " + predios.Count);
 
         int ladoX = predios.Count;
         int ladoZ = 1;
@@ -355,9 +355,9 @@ public class levelgenerator : MonoBehaviour
         //      Debug.Log("colunas: " + (lado1 + Mathf.Ceil(sobra/lado1)));
         float colunaExtra = Mathf.Ceil(sobra / ladoX);
         //        colunaExtra = colunaExtra / lado1;
-        Debug.Log("LEVEL-MAPA LINHA: sobra/lado: " + colunaExtra);
-        Debug.Log("LEVEL-MAPA LINHA: pontos x: " + (ladoX + colunaExtra));
-        Debug.Log("LEVEL-MAPA LINHA: pontos z: " + (ladoZ));
+//        Debug.Log("LEVEL-MAPA LINHA: sobra/lado: " + colunaExtra);
+//        Debug.Log("LEVEL-MAPA LINHA: pontos x: " + (ladoX + colunaExtra));
+//        Debug.Log("LEVEL-MAPA LINHA: pontos z: " + (ladoZ));
 
         Collider terreno = terrain.GetComponent<TerrainCollider>();
         float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
@@ -365,8 +365,8 @@ public class levelgenerator : MonoBehaviour
         float passoX = lateralX / (ladoX + colunaExtra + 1);
         float passoZ = lateralZ / (ladoZ + 1);
 
-        Debug.Log("LEVEL-MAPA LINHA: lado x: " + lateralX + "passo x: " + passoX);
-        Debug.Log("LEVEL-MAPA LINHA: lado z: " + lateralZ + "passo z: " + passoZ);
+//        Debug.Log("LEVEL-MAPA LINHA: lado x: " + lateralX + "passo x: " + passoX);
+//        Debug.Log("LEVEL-MAPA LINHA: lado z: " + lateralZ + "passo z: " + passoZ);
 
         float posX = passoX;
         float posZ = passoZ;
@@ -381,9 +381,9 @@ public class levelgenerator : MonoBehaviour
         //        GameObject predio = casa;
         for (int i = 0; i < predios.Count; i++)
         {
-            Debug.Log("LEVEL-MAPA LINHA: index x: " + indexX + "; index z: " + indexZ);
+//            Debug.Log("LEVEL-MAPA LINHA: index x: " + indexX + "; index z: " + indexZ);
             Vector3 posicao = new Vector3((indexX * passoX), tempY, (indexZ * passoZ));
-            Debug.Log("LEVEL-MAPA LINHA: coordendas: " + posicao);
+//            Debug.Log("LEVEL-MAPA LINHA: coordendas: " + posicao);
             //            Debug.Log("coordendas\n x: " + (indexX * passoX) + ", z: " + (indexZ * passoZ) + ", y: " + tempY);
 
             enderecos.Add(posicao);
@@ -412,10 +412,10 @@ public class levelgenerator : MonoBehaviour
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
-        Debug.Log("LEVEL-MAPA CIRCULO: total de enderecos: " + predios.Count);
+//        Debug.Log("LEVEL-MAPA CIRCULO: total de enderecos: " + predios.Count);
 
         int pontos = predios.Count;
-        Debug.Log("LEVEL-MAPA CIRCULO: pontos: " + pontos);
+//        Debug.Log("LEVEL-MAPA CIRCULO: pontos: " + pontos);
 
         Collider terreno = terrain.GetComponent<TerrainCollider>();
         float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
@@ -430,7 +430,7 @@ public class levelgenerator : MonoBehaviour
 
         float passoRad = 2 * Mathf.PI / pontos;
 
-        Debug.Log("LEVEL-MAPA CIRCULO: passo(rad): " + passoRad);
+//        Debug.Log("LEVEL-MAPA CIRCULO: passo(rad): " + passoRad);
 
         int index = 1;
 
@@ -439,11 +439,11 @@ public class levelgenerator : MonoBehaviour
 
         for (int i = 0; i < predios.Count; i++)
         {
-            Debug.Log("LEVEL-MAPA CIRCULO: index x: " + index);
+//            Debug.Log("LEVEL-MAPA CIRCULO: index x: " + index);
             float x = Mathf.Cos(passoRad * index) * raio + lateralX / 2;
             float z = Mathf.Sin(passoRad * index) * raio + lateralZ / 2;
             Vector3 posicao = new Vector3(x, tempY, z);
-            Debug.Log("LEVEL-MAPA CIRCULO: coordendas: " + posicao);
+//            Debug.Log("LEVEL-MAPA CIRCULO: coordendas: " + posicao);
             //            Debug.Log("LEVEL\MAPA CIRCULO: coordendas\n x: " + (indexX * passoX) + ", z: " + (indexZ * passoZ) + ", y: " + tempY);
 
 
@@ -460,7 +460,7 @@ public class levelgenerator : MonoBehaviour
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
-        Debug.Log("LEVEL-MAPA CRUZ: total de enderecos: " + predios.Count);
+//        Debug.Log("LEVEL-MAPA CRUZ: total de enderecos: " + predios.Count);
 
         int ladoX = (int)Mathf.Ceil(predios.Count / 2);
         int ladoZ = predios.Count - ladoX;
@@ -471,9 +471,9 @@ public class levelgenerator : MonoBehaviour
         //      Debug.Log("colunas: " + (lado1 + Mathf.Ceil(sobra/lado1)));
         float colunaExtra = Mathf.Ceil(sobra / ladoX);
         //        colunaExtra = colunaExtra / lado1;
-        Debug.Log("LEVEL-MAPA CRUZ: sobra/lado: " + colunaExtra);
-        Debug.Log("LEVEL-MAPA CRUZ: pontos x: " + (ladoX + colunaExtra));
-        Debug.Log("LEVEL-MAPA CRUZ: pontos z: " + (ladoZ));
+//        Debug.Log("LEVEL-MAPA CRUZ: sobra/lado: " + colunaExtra);
+//        Debug.Log("LEVEL-MAPA CRUZ: pontos x: " + (ladoX + colunaExtra));
+//        Debug.Log("LEVEL-MAPA CRUZ: pontos z: " + (ladoZ));
 
         Collider terreno = terrain.GetComponent<TerrainCollider>();
         float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
@@ -481,8 +481,8 @@ public class levelgenerator : MonoBehaviour
         float passoX = lateralX / (ladoX + colunaExtra + 1);
         float passoZ = lateralZ / (ladoZ + 1);
 
-        Debug.Log("LEVEL-MAPA CRUZ: lado x: " + lateralX + "passo x: " + passoX);
-        Debug.Log("LEVEL-MAPA CRUZ: lado z: " + lateralZ + "passo z: " + passoZ);
+//        Debug.Log("LEVEL-MAPA CRUZ: lado x: " + lateralX + "passo x: " + passoX);
+//        Debug.Log("LEVEL-MAPA CRUZ: lado z: " + lateralZ + "passo z: " + passoZ);
 
         //        float posX = passoX;
         //        float posZ = passoZ;
@@ -510,7 +510,7 @@ public class levelgenerator : MonoBehaviour
 
             if (i < ladoX)
             {
-                Debug.Log("LEVEL-MAPA CRUZ: index x: " + indexX + "; index z: " + indexZ);
+//                Debug.Log("LEVEL-MAPA CRUZ: index x: " + indexX + "; index z: " + indexZ);
                 Vector3 posicao = new Vector3((indexX * posX), tempY, (indexZ * posZ));
                 enderecos.Add(posicao);
                 //                Instantiate(predios[i].tipoPredio, posicao, Quaternion.identity);
@@ -522,7 +522,7 @@ public class levelgenerator : MonoBehaviour
                 posX = lateralX / 2;
                 posZ = passoZ;
 
-                Debug.Log("LEVEL-MAPA CRUZ: index x: " + indexX + "; index z: " + indexZ);
+//                Debug.Log("LEVEL-MAPA CRUZ: index x: " + indexX + "; index z: " + indexZ);
                 Vector3 posicao = new Vector3((indexX * posX), tempY, (indexZ * posZ));
                 enderecos.Add(posicao);
                 //                Instantiate(predios[i].tipoPredio, posicao, Quaternion.identity);
@@ -537,7 +537,7 @@ public class levelgenerator : MonoBehaviour
     void GenerateObjects (GameObject go, int amount)
     {
 
-        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
+//        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
 
         if (go == null) return;
         col = terrain.GetComponent<TerrainCollider>();
@@ -551,7 +551,7 @@ public class levelgenerator : MonoBehaviour
             enderecos.Add(randPoint);
 
         }
-        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no fim: " + enderecos.Count);
+//        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no fim: " + enderecos.Count);
 
         //        colocaPredios();
     }

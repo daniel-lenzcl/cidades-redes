@@ -8,30 +8,32 @@ public class horas : MonoBehaviour
     //    public Transform mexerhoras, mexerminuto, mexersegundo;
     public Text as_hora;
     public Text os_dia;
-    public float tempoSimulado = .05f;
+    public double tempoSimulado;// = 3;
 
 
-    public float hora;
-    public float min;
-    public float dias;
+    public int hora;
+    public int min;
+    public int dias;
     //    float temposim = 0.5f;
-    float temporizador = 0f;
-    float tpassado = 0f;
+    double temporizador = 0f;
+    double tpassado = 0f;
     Texture tex;
 
     public bool rodadia = true;
 
     public void Start()
     {
-        hora = 0f;
-        min = 0f;
-        dias = 0f;
+        hora = 0;
+        min = 0;
+        dias = 0;
+        tempoSimulado = 0.1;
         //        Debug.Log(DateTime.Now);
         //   Debug.Log(" vamo ver");
         //       Debug.Log(DateTime.Now);
         tpassado = Time.deltaTime;
         rodadia = false;
         Debug.Log("HORAS - START: inicializado RODA DIA = " +rodadia);
+        Debug.Log(tempoSimulado);
 
     }
 
@@ -47,24 +49,24 @@ public class horas : MonoBehaviour
               {
                   temporizador += Time.deltaTime;
             //Debug.Log("roda dia: " + rodadia);
-            //        Debug.Log("intervalo " + tempoSimulado);
-            //        Debug.Log("temporizador " + temporizador);
-            //        Debug.Log("tempo passado " + (temporizador - tpassado));
+                    Debug.Log("intervalo " + tempoSimulado);
+                    Debug.Log("temporizador " + temporizador);
+        Debug.Log("tempo passado " + (tempoSimulado - temporizador));
 
-            if (tempoSimulado < temporizador)
+            if (tempoSimulado < temporizador )
             {
                 //            float tpassado = Time.deltaTime - temporizador;
                 //           Debug.Log("tempo passado " + tpassado);
                 //           Debug.Log("tempo andou");
-                temporizador = Time.deltaTime;
-                min++;
-                if (min > 59f)
+                temporizador = 0;// Time.deltaTime;
+                min+=20;
+                if (min > 59)
                 {
-                    min = 0f;
+                    min = 0;
                     hora++;
-                    if (hora > 23f) 
+                    if (hora > 23) 
                     { 
-                        hora = 0f;
+                        hora = 0;
                         dias++;
                     }
                 }
@@ -80,10 +82,10 @@ public class horas : MonoBehaviour
             //        as_hora.text = hora.ToString() + "h" + min.ToString();
 
         }
-//        os_dia.text = (dias+"d");
-//        as_hora.text = (hora + "h" + min.ToString("00"));
+        //        os_dia.text = (dias+"d");
+        //        as_hora.text = (hora + "h" + min.ToString("00"));
 
-        as_hora.text = (dias+"d " + hora.ToString("00") + "h" + min.ToString("00"));
+        as_hora.text = (dias + "d " + hora.ToString("00") + "h" + min.ToString("00"));
 
     }
 

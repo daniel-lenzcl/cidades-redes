@@ -99,7 +99,7 @@ public class pessoa : MonoBehaviour
                     switch (tempo)
                         {
                             //private string[] dest = { "jardins", "alameda", "fonteLinear", "fonteCircular", "fonteFemininas", "coreto", "plataforma" };
-                            case 1:
+                            case 6:
                                 destino = trabalho;
 //                                sdest = "trabalho";
                                 break;
@@ -114,7 +114,7 @@ public class pessoa : MonoBehaviour
                                 //destino = GameObject.Find("fonteLinear").transform.position;
 //                                sdest = "trabalho";
 //                                break;
-                            case 15:
+                            case 18:
                                 destino = casa;
 //                                sdest = "casa";
                                 break;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
+
 
 //[System.Serializable]
 public class populacao: MonoBehaviour
@@ -16,6 +18,12 @@ public class populacao: MonoBehaviour
     public List<cContatos> listaC = new List<cContatos>();
     public GameObject[] individuos;
     public int numeroTestes = 0;
+    public string endereco;
+    public Button podelistarede;
+
+
+
+
     /*
      * public int p11_20;
         public int p21_30;
@@ -86,17 +94,31 @@ public class populacao: MonoBehaviour
 
     }
 
+    public void GetEndereco(string tEndereco)
+    {
+        endereco = tEndereco;
+        if (System.IO.Directory.Exists(@endereco.ToString())) 
+        {
+            podelistarede.interactable = true;
+        }       //        if(@endereco)
+                //        gerarMapa.interactable = true;
+    }
+
 
     public void salvaMatriz()
     {
         //endereco do arquivo
         string path = @"C:\Users\danie\gdrive prourb\PASTA academica\@UFRJ\doutorado\analise de redes\redes geradas";
-
+//        endereco = GameObject.Find("InputEndereco").GetComponent<InputField>().text;
+        path = @endereco.ToString();
         //data para cabecalho
-        string dia = System.DateTime.Now.ToString("HH_mm_ss dd-MM-yy");
+        string dia = System.DateTime.Now.ToString(" dd-MM-yy HH_mm_ss ");
         //criando o arquivo
-        path += "/simulacao" + dia + ".net";
-        File.WriteAllText(path, "*vertices " + individuos.Length.ToString() + "% " + GameObject.Find("Terrain").GetComponent<horas>().as_hora.text+"\n");
+        string tM = GameObject.Find("Canvas").GetComponent<Mapas>().tipoMapa;
+        string tD = GameObject.Find("Terrain").GetComponent<levelgenerator>().tipoDistribuicao;
+        path += "/simulacao" + dia + " " + tM.Substring(0,3) + " " + tD.Substring(0,3) +".net";
+        File.WriteAllText(path, "% mapa: " + tM + "; distribuicao: " + tD + "; "+ GameObject.Find("Terrain").GetComponent<horas>().as_hora.text + "\n");
+        File.AppendAllText(path, "*vertices " + individuos.Length.ToString() + "\n");
 
         /*        
                 if (!File.Exists(path))
