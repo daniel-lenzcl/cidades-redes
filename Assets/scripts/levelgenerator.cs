@@ -241,6 +241,62 @@ public class levelgenerator : MonoBehaviour
 
                 }
                 break;
+            case "alternado":
+                List<Predios> asCasas = new List<Predios>();
+                asCasas.AddRange(predios.FindAll((x) => x.nomePredio.Contains("casa")));                   // tentando fazer sublist de list. .ADDRANGE resolveu a questao
+                List<Predios> osTrabalhos = new List<Predios>();
+                osTrabalhos.AddRange(predios.FindAll((x) => x.nomePredio.Contains("trabalho")));                   // tentando fazer sublist de list. .ADDRANGE resolveu a questao
+                float numCasa = asCasas.Count;
+                float numTrab = osTrabalhos.Count;
+
+                int controlePredio = 0;
+                float propC = numCasa / numTrab;
+                float propT = numTrab / numCasa;
+                int Pindex = 0;
+                int indexC = 0;
+                int indexT = 0;
+                //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: numCasa " + numCasa + "numTrab " + numTrab);
+                //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: propC " + propC + "propT " + propT);
+                float incremento = Mathf.Min(propC, propT);
+
+                for (int i = 0; i < predios.Count; i++)
+                {
+                Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: i: " + i);
+
+//                    if (propC < propT)
+//                    {
+//                        if (controlePredio < propC && indexC < numCasa)
+//                        {
+//                            Pindex = predios.IndexOf(asCasas[indexC]);
+//                            Debug.Log("LEVEL COLOCA PREDIOS - poe CASA: indexC: " + indexC + "Pindex " + Pindex);
+//                            indexC++;
+//                        }
+//                    }
+/// nao ta saindo a sequencia desejada
+/// ele ta perdendo de pegar as coordenadas na lista de endereco
+
+                    if (controlePredio < propC && indexC < numCasa)
+                    {
+                            Pindex = predios.IndexOf(asCasas[indexC]);
+                        Debug.Log("LEVEL COLOCA PREDIOS - poe CASA: indexC: " + indexC +"Pindex " + Pindex);
+                        indexC++;
+                    }
+                    if (controlePredio < propT && indexT < numTrab)
+                    {
+                            Pindex = predios.IndexOf(osTrabalhos[indexT]);
+                        Debug.Log("LEVEL COLOCA PREDIOS - poe TRAB: indexT: " + indexT + "Pindex " + Pindex);
+                        indexT++;
+                    }
+
+                    predios[Pindex].enderecoXYZ = enderecos[i];
+                    //                    Instantiate(predios[i].predioPreFab, enderecos[i], Quaternion.identity);
+                    controlePredio+= incremento;
+                    Debug.Log("LEVEL COLOCA PREDIOS - Mathf.Max: " + Mathf.Max(propC, propT) + "controlePredio: " + controlePredio);
+
+                    if (controlePredio >= Mathf.Max(propC, propT)) { controlePredio = 0; }
+
+                }
+                break;
         }
         foreach (Predios p in predios)
         {

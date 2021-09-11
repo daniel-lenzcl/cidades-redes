@@ -21,7 +21,7 @@ public class Mapas : MonoBehaviour
         List<string> tiposDistribuicoes = new List<string>()
         {
             "continuo",
-//            "setorizado", ///precisara ser implementado qd se colocar um 3o destino
+            "alternado", ///precisara ser implementado qd se colocar um 3o destino
             "aleatorio",
         };
         var drpDistribuicao = GameObject.Find("DdDISTRIBUICAO").GetComponent<Dropdown>();
