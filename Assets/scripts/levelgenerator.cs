@@ -249,52 +249,59 @@ public class levelgenerator : MonoBehaviour
                 float numCasa = asCasas.Count;
                 float numTrab = osTrabalhos.Count;
 
-                int controlePredio = 0;
+                List<Predios> maisPredios = new List<Predios>();
+                List<Predios> menosPredios = new List<Predios>();
+                float prop;
+                prop = numCasa / numTrab;
+                if (numCasa < numTrab)
+                {
+                    prop = numTrab / numCasa;
+                    maisPredios = osTrabalhos;
+                    menosPredios = asCasas;
+                }
+                else
+                {
+                    maisPredios = asCasas;
+                    menosPredios = osTrabalhos;
+                }
+
                 float propC = numCasa / numTrab;
                 float propT = numTrab / numCasa;
                 int Pindex = 0;
-                int indexC = 0;
-                int indexT = 0;
+                int index1 = 0;
+                int index2 = 0;
                 //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: numCasa " + numCasa + "numTrab " + numTrab);
                 //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: propC " + propC + "propT " + propT);
-                float incremento = Mathf.Min(propC, propT);
-
+                
+                int controleProporcao = 1;
                 for (int i = 0; i < predios.Count; i++)
                 {
                 Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: i: " + i);
 
-//                    if (propC < propT)
-//                    {
-//                        if (controlePredio < propC && indexC < numCasa)
-//                        {
-//                            Pindex = predios.IndexOf(asCasas[indexC]);
-//                            Debug.Log("LEVEL COLOCA PREDIOS - poe CASA: indexC: " + indexC + "Pindex " + Pindex);
-//                            indexC++;
-//                        }
-//                    }
-/// nao ta saindo a sequencia desejada
-/// ele ta perdendo de pegar as coordenadas na lista de endereco
-
-                    if (controlePredio < propC && indexC < numCasa)
+                    if (controleProporcao < prop)
                     {
-                            Pindex = predios.IndexOf(asCasas[indexC]);
-                        Debug.Log("LEVEL COLOCA PREDIOS - poe CASA: indexC: " + indexC +"Pindex " + Pindex);
-                        indexC++;
+                        if (index1 < maisPredios.Count)
+                        {
+                            Pindex = predios.IndexOf(maisPredios[index1]);
+                            Debug.Log("LEVEL COLOCA PREDIOS - poe mais predios: indexC: " + index1 + "Pindex " + Pindex);
+                            index1++;
+                            controleProporcao++;
+                        }
                     }
-                    if (controlePredio < propT && indexT < numTrab)
+                    else
                     {
-                            Pindex = predios.IndexOf(osTrabalhos[indexT]);
-                        Debug.Log("LEVEL COLOCA PREDIOS - poe TRAB: indexT: " + indexT + "Pindex " + Pindex);
-                        indexT++;
+                        if (index2 < menosPredios.Count)
+                        {
+                            Pindex = predios.IndexOf(menosPredios[index2]);
+                            Debug.Log("LEVEL COLOCA PREDIOS - poe menos predios: indexT: " + index2 + "Pindex " + Pindex);
+                            index2++;
+                            controleProporcao = 1;
+                        }
+
                     }
 
                     predios[Pindex].enderecoXYZ = enderecos[i];
-                    //                    Instantiate(predios[i].predioPreFab, enderecos[i], Quaternion.identity);
-                    controlePredio+= incremento;
-                    Debug.Log("LEVEL COLOCA PREDIOS - Mathf.Max: " + Mathf.Max(propC, propT) + "controlePredio: " + controlePredio);
-
-                    if (controlePredio >= Mathf.Max(propC, propT)) { controlePredio = 0; }
-
+//                    Debug.Log("LEVEL COLOCA PREDIOS - Mathf.Max: " + Mathf.Max(propC, propT) + "controlePredio: " + controlePredio);
                 }
                 break;
         }
