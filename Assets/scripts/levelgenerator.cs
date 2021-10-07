@@ -101,10 +101,10 @@ public class levelgenerator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+//    void Update()
+//    {
+//        
+//    }
 
     public void setaListas(string lista)
     {
@@ -242,6 +242,7 @@ public class levelgenerator : MonoBehaviour
                 }
                 break;
             case "alternado":
+                ///                                             CRIAR ESQUEMA TIPO ENDTEMP DO ALEATORIO
                 List<Predios> asCasas = new List<Predios>();
                 asCasas.AddRange(predios.FindAll((x) => x.nomePredio.Contains("casa")));                   // tentando fazer sublist de list. .ADDRANGE resolveu a questao
                 List<Predios> osTrabalhos = new List<Predios>();
@@ -252,7 +253,6 @@ public class levelgenerator : MonoBehaviour
                 List<Predios> maisPredios = new List<Predios>();
                 List<Predios> menosPredios = new List<Predios>();
                 float prop;
-                prop = numCasa / numTrab;
                 if (numCasa < numTrab)
                 {
                     prop = numTrab / numCasa;
@@ -261,6 +261,7 @@ public class levelgenerator : MonoBehaviour
                 }
                 else
                 {
+                    prop = numCasa / numTrab;
                     maisPredios = asCasas;
                     menosPredios = osTrabalhos;
                 }
@@ -272,8 +273,22 @@ public class levelgenerator : MonoBehaviour
                 int index2 = 0;
                 //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: numCasa " + numCasa + "numTrab " + numTrab);
                 //Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: propC " + propC + "propT " + propT);
-                
-                int controleProporcao = 1;
+
+
+                /// reescrever a partir de uma lista copiada, em q cada atribuicao "come" a lista. ao final, garante q todos os elementos da lista terao sido percorridos
+                /// algo tipo
+                /// copiaEnderecos
+                /// 
+                /// conta os q precisa do tipo 1
+                ///     atribui pra tipo1[0]=copiaEnderecos[0]
+                ///     tipo1[0].Remove, copaiEnderecos[0].remove, proxima contagem
+                /// conta os q precisa do tipo 2
+                ///     atribui pra tipo2[0]=copiaEnderecos[0]
+                ///     tipo2[0].Remove, copaiEnderecos[0].remove, proxima contagem
+                /// 
+                Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: porp: " + prop +" mais predios = " + maisPredios.Count + "menos predios " + menosPredios.Count);
+
+                int controleProporcao = 0;
                 for (int i = 0; i < predios.Count; i++)
                 {
                 Debug.Log("LEVEL COLOCA PREDIOS - ALTERNADO: i: " + i);
@@ -295,7 +310,11 @@ public class levelgenerator : MonoBehaviour
                             Pindex = predios.IndexOf(menosPredios[index2]);
                             Debug.Log("LEVEL COLOCA PREDIOS - poe menos predios: indexT: " + index2 + "Pindex " + Pindex);
                             index2++;
-                            controleProporcao = 1;
+                            if (index1 < maisPredios.Count)
+                            {
+                                controleProporcao = 0;
+                            }
+
                         }
 
                     }
