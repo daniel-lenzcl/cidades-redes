@@ -9,6 +9,7 @@ public class levelgenerator : MonoBehaviour
 
     //    public GameObject pessoa;
     //    public GameObject enemy;
+    public GameObject cam;
     public GameObject prefabP;
     public GameObject casa;
     public GameObject escola;
@@ -24,6 +25,8 @@ public class levelgenerator : MonoBehaviour
 
     private Collider col;
 
+//    public NavMeshSurface superficie;
+
 //    public int numberOfEnemies;
 //    public int numberOfPessoas;
     public int totalCasas;
@@ -31,6 +34,7 @@ public class levelgenerator : MonoBehaviour
     public int totalTrabalhos;
     public int maxPessoasI;
     public int totalPessoas;
+    public float distanciaPredios = 10f;
 
     private List<Vector3> usedPoints;
 
@@ -96,7 +100,8 @@ public class levelgenerator : MonoBehaviour
                 Debug.Log("populacao total: " + tpop + " criancas: " + criancas);
         */
         usedPoints = new List<Vector3>();
-//        iniciaMapa();
+        cam.GetComponent<ajusteCamera>().reposicionar();
+        //        iniciaMapa();
         //        lugar = new List<Lugar>();
     }
 
@@ -129,9 +134,9 @@ public class levelgenerator : MonoBehaviour
     public void iniciaMapa()
     {
 
-//        setaListas("predios");
-//        setaListas("enderecos");
-//        setaListas("pessoas");
+        //        setaListas("predios");
+        //        setaListas("enderecos");
+        //        setaListas("pessoas");
 
 
         GameObject[] pessoas = GameObject.FindGameObjectsWithTag("pessoas");
@@ -213,9 +218,8 @@ public class levelgenerator : MonoBehaviour
 
     public void colocaPredios()
     {
-        //        iniciaMapa();
 
-//        Debug.Log("LEVEL-COLOCA PREDIOS: total de predios: " + predios.Count);// "endereco via predio:"+ tempcasa.enderecoXYZ);
+        terrain.GetComponent<NavMeshSurface>().BuildNavMesh();
 
         switch (tipoDistribuicao)
         {
@@ -330,6 +334,9 @@ public class levelgenerator : MonoBehaviour
 //            Debug.Log("LEVEL-COLOCA PREDIOS: nome predio: "+ p.nomePredio + "endereco " + p.enderecoXYZ);
         }
 
+        cam.GetComponent<ajusteCamera>().reposicionar();
+        //        Debug.Log("centro bounds: " + posCam);
+
     }
 
     /*
@@ -343,12 +350,109 @@ public class levelgenerator : MonoBehaviour
 
     public void mapaAleatorio()
     {
+
+        float passoRad = 2 * Mathf.PI / predios.Count; 
+
+        float raio = (distanciaPredios ) / (passoRad / 3);
+        //        Debug.Log("LEVEL-MAPA CIRCULO: passo(rad): " + passoRad);
+
+        terrain.GetComponent<Terrain>().terrainData.size = new Vector3(raio*2, 0, raio*2 );       //dimensionamento variavel atribuido aki
+
         //        Generate();   -----> substituido por iniciaMapa
+        usedPoints.Clear();
+
+        gerarMatrizUsedPoints(predios.Count);
+
         GenerateObjects(escola, totalEscolas);
         GenerateObjects(trabalho, totalTrabalhos);
         GenerateObjects(casa, totalCasas);
 //        Debug.Log("LEVEL - MAPA ALEATORIO: total de enderecos: "+ enderecos.Count);
         colocaPredios();
+
+    }
+
+    void GenerateObjects(GameObject go, int amount)
+    {
+
+        //        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
+
+        if (go == null) return;
+        col = terrain.GetComponent<TerrainCollider>();
+
+        for (int i = 0; i < amount; i++)
+        {
+            //Vector3 randPoint = getRandPoint();
+            //usedPoints.Add(randPoint);
+            //randPoint.y += go.transform.position.y;
+            //            Instantiate(go,randPoint,Quaternion.identity);
+
+            //////////////versao simplificada via matriz de pontos
+            int auxRdm = Random.Range(0, usedPoints.Count);
+            Vector3 randPoint = usedPoints[auxRdm];
+            usedPoints.RemoveAt(auxRdm);
+            /////////////////
+            enderecos.Add(randPoint);
+
+        }
+        //        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no fim: " + enderecos.Count);
+
+        //        colocaPredios();
+    }
+
+    public void gerarMatrizUsedPoints(int totalPontos)
+    {
+
+        totalPontos *= 3;
+            int ladoX = (int)Mathf.Sqrt(totalPontos);
+            int ladoZ = (int)(totalPontos / ladoX);
+            float sobra = totalPontos - (ladoX * ladoZ);
+            //        Debug.Log("LEVEL\MAPA MATRIZ: colunas: " + (lado1 + Mathf.Ceil(sobra/lado1)));
+
+            float colunaExtra = Mathf.Ceil(sobra / ladoX);
+            //        Debug.Log("LEVEL\MAPA MATRIZ: pontos x: " + (ladoX + colunaExtra));
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            ///                     INSERIR AJUSTE TE TAMANHO DO TERRENO
+
+            float x = (ladoX + colunaExtra) * distanciaPredios + distanciaPredios;
+            float z = ladoZ * distanciaPredios + distanciaPredios;
+            terrain.GetComponent<Terrain>().terrainData.size = new Vector3(x, 0, z);       //dimensionamento variavel atribuido aki
+
+            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            float passoX = distanciaPredios; // lateralX / (ladoX + colunaExtra + 1);
+            float passoZ = distanciaPredios; // lateralZ / (ladoZ + 1);
+                                             //        Debug.Log("LEVEL\MAPA MATRIZ: lado x: "+ lateralX+"passo x: " + passoX);
+                                             //        Debug.Log("LEVEL\MAPA MATRIZ: lado z: " +lateralZ+"passo z: " + passoZ);
+
+            float posX = passoX;
+            float posZ = passoZ;
+            int indexX = 1;
+            int indexZ = 1;
+
+            Vector3 tvector = new Vector3((indexX * passoX), 0f, (indexZ * passoZ));
+            float tempY = Terrain.activeTerrain.SampleHeight(tvector);
+            for (int i = 0; i < totalPontos; i++) // predios.Count; i++)
+            {
+                //            Debug.Log("LEVEL-MAPA MATRIZ: index x: " + indexX + "; index z: " + indexZ);
+                Vector3 posicao = new Vector3((indexX * passoX), tempY, (indexZ * passoZ));
+                usedPoints.Add(posicao);
+                //            Debug.Log("LEVEL-MAPA MATRIZ: coordendas: " + posicao);
+                //            Debug.Log("LEVEL-MAPA MATRIZ: coordendas\n x: " + (indexX * passoX) + ", z: " + (indexZ * passoZ) + ", y: " + tempY);
+
+
+                indexX += 1;
+                if (indexX > ladoX + colunaExtra)
+                {
+                    indexX = 1;
+                    indexZ += 1;
+                    if (indexZ > ladoZ)
+                    {
+                        indexZ = 1;
+                    }
+                }
+            }
+        Debug.Log("total usedPoints: " + usedPoints.Count);
+
 
     }
 
@@ -370,11 +474,24 @@ public class levelgenerator : MonoBehaviour
         //        Debug.Log("LEVEL\MAPA MATRIZ: pontos x: " + (ladoX + colunaExtra));
         //        Debug.Log("LEVEL\MAPA MATRIZ: pontos z: " + (ladoZ));
 
-        Collider terreno = terrain.GetComponent<TerrainCollider>();
-        float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
-        float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
-        float passoX = lateralX / (ladoX + colunaExtra + 1);
-        float passoZ = lateralZ / (ladoZ + 1);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///                     INSERIR AJUSTE TE TAMANHO DO TERRENO
+        ///                     
+        ///             int pontos = predios.Count;
+        ///             float passoRad = 2 * Mathf.PI / pontos; //INVERTER A DEFINICAO. PASSO_RAD = 180-(360/PONTOS)
+        ///             float raio = (distanciaPredios / 2) / (passoRad / 2);
+
+        float x = (ladoX + colunaExtra) * distanciaPredios + distanciaPredios;          //TA BEM ERRADO, HORA FALA DE QTD DE PONTOS NA OUTRA DE DISTANCIA, REVISAR
+        float z = ladoZ * distanciaPredios + distanciaPredios;
+        terrain.GetComponent<Terrain>().terrainData.size = new Vector3(x, 0, z);       //dimensionamento variavel atribuido aki
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //Collider terreno = terrain.GetComponent<TerrainCollider>();
+        //float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
+        //float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
+        float passoX = distanciaPredios; // lateralX / (ladoX + colunaExtra + 1);
+        float passoZ = distanciaPredios; // lateralZ / (ladoZ + 1);
         //        Debug.Log("LEVEL\MAPA MATRIZ: lado x: "+ lateralX+"passo x: " + passoX);
         //        Debug.Log("LEVEL\MAPA MATRIZ: lado z: " +lateralZ+"passo z: " + passoZ);
 
@@ -437,15 +554,28 @@ public class levelgenerator : MonoBehaviour
         //      Debug.Log("colunas: " + (lado1 + Mathf.Ceil(sobra/lado1)));
         float colunaExtra = Mathf.Ceil(sobra / ladoX);
         //        colunaExtra = colunaExtra / lado1;
-//        Debug.Log("LEVEL-MAPA LINHA: sobra/lado: " + colunaExtra);
-//        Debug.Log("LEVEL-MAPA LINHA: pontos x: " + (ladoX + colunaExtra));
-//        Debug.Log("LEVEL-MAPA LINHA: pontos z: " + (ladoZ));
+        //        Debug.Log("LEVEL-MAPA LINHA: sobra/lado: " + colunaExtra);
+        //        Debug.Log("LEVEL-MAPA LINHA: pontos x: " + (ladoX + colunaExtra));
+        //        Debug.Log("LEVEL-MAPA LINHA: pontos z: " + (ladoZ));
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///                     INSERIR AJUSTE TE TAMANHO DO TERRENO
+        ///                     
+        ///             int pontos = predios.Count;
+        ///             float passoRad = 2 * Mathf.PI / pontos; //INVERTER A DEFINICAO. PASSO_RAD = 180-(360/PONTOS)
+        ///             float raio = (distanciaPredios / 2) / (passoRad / 2);
+        float x = ladoX * distanciaPredios + distanciaPredios;
+        float z = ladoZ * distanciaPredios + distanciaPredios;
+
+        terrain.GetComponent<Terrain>().terrainData.size = new Vector3(x, 0, z);       //dimensionamento variavel atribuido aki
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
         Collider terreno = terrain.GetComponent<TerrainCollider>();
-        float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
-        float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
-        float passoX = lateralX / (ladoX + colunaExtra + 1);
-        float passoZ = lateralZ / (ladoZ + 1);
+        //float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
+        //float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
+        float passoX = distanciaPredios; // lateralX / (ladoX + colunaExtra + 1);
+        float passoZ = distanciaPredios; // lateralZ / (ladoZ + 1);
 
 //        Debug.Log("LEVEL-MAPA LINHA: lado x: " + lateralX + "passo x: " + passoX);
 //        Debug.Log("LEVEL-MAPA LINHA: lado z: " + lateralZ + "passo z: " + passoZ);
@@ -487,10 +617,9 @@ public class levelgenerator : MonoBehaviour
         }
         colocaPredios();
 
-
     }
 
-    public void mapaCirculo()
+    public void mapaCirculoAntigo()             //PROCEDIMENTO BASEADO NO RAIO
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
 
@@ -538,6 +667,63 @@ public class levelgenerator : MonoBehaviour
         colocaPredios();
     }
 
+    public void mapaCirculo()           //NOVO CIRCULO, BASEADO NA DISTANCIA ENTRE OS PONTOS
+    {
+        //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
+
+        //        Debug.Log("LEVEL-MAPA CIRCULO: total de enderecos: " + predios.Count);
+
+        int pontos = predios.Count;
+        //        Debug.Log("LEVEL-MAPA CIRCULO: pontos: " + pontos);
+
+        //        Collider terreno = terrain.GetComponent<TerrainCollider>();     //trocar isso por dimensao variavel, de acordo com o total de elementos  -> resolvido
+        //        float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
+        //        float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
+
+        //float lado = 20;  trocado por 'distanciaPredios'
+
+        float passoRad = 2 * Mathf.PI / pontos; //INVERTER A DEFINICAO. PASSO_RAD = 180-(360/PONTOS)
+
+        float raio = (distanciaPredios / 2)/(passoRad / 2);
+        //        Debug.Log("LEVEL-MAPA CIRCULO: passo(rad): " + passoRad);
+
+
+
+        terrain.GetComponent<Terrain>().terrainData.size = new Vector3 (raio * 2 + 20, 0, raio*2+20);       //dimensionamento variavel atribuido aki
+                                                                                                            //atualizar o terreno para o navmesh
+                                                                                                            //        NavMeshSurface superficie = terrain;
+                                                                                                            //NavMesh.BuildNavMesh();
+//        terrain.GetComponent<NavMeshSurface>().BuildNavMesh();
+
+        Collider terreno = terrain.GetComponent<TerrainCollider>();     
+        float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
+        float lateralZ = terreno.bounds.max.z - terreno.bounds.min.z;
+
+
+        int index = 1;
+
+        Vector3 tvector = new Vector3(0f, 0f, 0f);
+        float tempY = Terrain.activeTerrain.SampleHeight(tvector);
+
+        for (int i = 0; i < predios.Count; i++)
+        {
+            //            Debug.Log("LEVEL-MAPA CIRCULO: index x: " + index);
+            float x = Mathf.Cos(passoRad * index) * raio + lateralX / 2;                //  X = DISTANCIA_PADRAO * COS(ANGULO ATUAL * I * PASSO_RAD) 
+            float z = Mathf.Sin(passoRad * index) * raio + lateralZ / 2;                // 
+            Vector3 posicao = new Vector3(x, tempY, z);
+            //            Debug.Log("LEVEL-MAPA CIRCULO: coordendas: " + posicao);
+            //            Debug.Log("LEVEL\MAPA CIRCULO: coordendas\n x: " + (indexX * passoX) + ", z: " + (indexZ * passoZ) + ", y: " + tempY);
+
+
+            enderecos.Add(posicao);
+            //            Instantiate(predios[i].tipoPredio, posicao, Quaternion.identity);
+
+            index += 1;
+
+        }
+        colocaPredios();
+    }
+
     public void mapaCruz()
     {
         //        enderecos = new Vector3[totalCasas + totalEscolas + totalTrabalhos];
@@ -553,9 +739,23 @@ public class levelgenerator : MonoBehaviour
         //      Debug.Log("colunas: " + (lado1 + Mathf.Ceil(sobra/lado1)));
         float colunaExtra = Mathf.Ceil(sobra / ladoX);
         //        colunaExtra = colunaExtra / lado1;
-//        Debug.Log("LEVEL-MAPA CRUZ: sobra/lado: " + colunaExtra);
-//        Debug.Log("LEVEL-MAPA CRUZ: pontos x: " + (ladoX + colunaExtra));
-//        Debug.Log("LEVEL-MAPA CRUZ: pontos z: " + (ladoZ));
+        //        Debug.Log("LEVEL-MAPA CRUZ: sobra/lado: " + colunaExtra);
+        //        Debug.Log("LEVEL-MAPA CRUZ: pontos x: " + (ladoX + colunaExtra));
+        //        Debug.Log("LEVEL-MAPA CRUZ: pontos z: " + (ladoZ));
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///                     INSERIR AJUSTE TE TAMANHO DO TERRENO
+        ///                     
+        ///             int pontos = predios.Count;
+        ///             float passoRad = 2 * Mathf.PI / pontos; //INVERTER A DEFINICAO. PASSO_RAD = 180-(360/PONTOS)
+        ///             float raio = (distanciaPredios / 2) / (passoRad / 2);
+        ///             
+        float x = ladoX * distanciaPredios + distanciaPredios;
+        float z = ladoZ * distanciaPredios + distanciaPredios;
+
+        terrain.GetComponent<Terrain>().terrainData.size = new Vector3(x, 0, z);       //dimensionamento variavel atribuido aki
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         Collider terreno = terrain.GetComponent<TerrainCollider>();
         float lateralX = terreno.bounds.max.x - terreno.bounds.min.x;
@@ -616,48 +816,86 @@ public class levelgenerator : MonoBehaviour
     }
 
 
-    void GenerateObjects (GameObject go, int amount)
-    {
-
-//        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
-
-        if (go == null) return;
-        col = terrain.GetComponent<TerrainCollider>();
-     
-        for (int i = 0; i < amount; i++)
-        {
-            Vector3 randPoint = getRandPoint();
-            usedPoints.Add(randPoint);
-            randPoint.y += go.transform.position.y;
-//            Instantiate(go,randPoint,Quaternion.identity);
-            enderecos.Add(randPoint);
-
-        }
-//        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no fim: " + enderecos.Count);
-
-        //        colocaPredios();
-    }
 
     Vector3 getRandPoint()
     {
         //aki a nao sobreposicao ta precisa, o q permite q um obj entre dentro do outro. refazer de modo a nao criar mais obj dentro de outro
 
         float maiorpredio = 5f;
-        float x = Random.Range(col.bounds.min.x + maiorpredio, col.bounds.max.x - maiorpredio);
-        float z = Random.Range(col.bounds.min.z + maiorpredio, col.bounds.max.z - maiorpredio);
+//        float x = Random.Range(col.bounds.min.x + maiorpredio, col.bounds.max.x - maiorpredio);
+//        float z = Random.Range(col.bounds.min.z + maiorpredio, col.bounds.max.z - maiorpredio);
 
-        Vector3 tvector = new Vector3(x, 0f, z);
-        float tempY = Terrain.activeTerrain.SampleHeight(tvector);
+        Vector3 tvector = new Vector3(0, 0f, 0);
+//        float tempY = Terrain.activeTerrain.SampleHeight(tvector);
 
-        Vector3 novapos = new Vector3(x, tempY, z);
+//        Vector3 novapos = new Vector3(x, tempY, z);
+        bool pontosBatem = false;
+        //        Vector3 novapos = new Vector3(0, 0, 0);
+        int limitador = 0;
+        float TempEspacamento = distanciaPredios + maiorpredio;
+        float minX = col.bounds.min.x + maiorpredio;
+        float maxX = col.bounds.max.x - maiorpredio;
+        float minZ = col.bounds.min.z + maiorpredio;
+        float maxZ = col.bounds.max.z - maiorpredio;
 
-        //CHECAR COMO SELECIONAR PONTO NAO REPETIDO FORA DE AREA JA OCUPADA POR OUTRO OBJETO. TVZ BOUNDS SEJA UMA ESTRATEGIA
-        if (usedPoints.Contains(novapos)) getRandPoint();
-//      foreach (GameObject limites in trabalhos)
-//       {
-//           if (limites.Collider.Contains(novapos)) getRandPoint();
-//                Destroy(limites);
-//       }
+        if (usedPoints.Count < 1) 
+        {
+            float x = Random.Range(minX , maxX );
+            float z = Random.Range(minZ , maxZ );
+
+            tvector = new Vector3(x, 0f, z);
+//            float tempY = Terrain.activeTerrain.SampleHeight(tvector);
+//            Vector3 novapos = new Vector3(x, tempY, z);
+        }
+        else
+        {
+            do
+            {
+//                Random.InitState((int)(Mathf.Pow((float)Time.unscaledTimeAsDouble, 2))); ;
+//                int seed = Random.Range(0, 124334);
+//                Random.seed = seed;
+                float x = Random.Range(minX, maxX);
+                float z = Random.Range(minZ, maxZ);
+
+                tvector = new Vector3(x, 0f, z);
+                float tempY = Terrain.activeTerrain.SampleHeight(tvector);
+                Vector3 novapos = new Vector3(x, tempY, z);
+                float tempDist = 0;
+                //CHECAR COMO SELECIONAR PONTO NAO REPETIDO FORA DE AREA JA OCUPADA POR OUTRO OBJETO. TVZ BOUNDS SEJA UMA ESTRATEGIA
+                foreach (Vector3 p in usedPoints)
+                {
+                    tempDist = Vector3.Distance(p, tvector);
+                    if (tempDist < TempEspacamento)
+                    {
+                        //                    Debug.Log("distancia entre pontos: " + Vector3.Distance(p, novapos));
+                        //                    Debug.Log("distancia padrao: " + (distanciaPredios+maiorpredio));
+                        pontosBatem = true;
+                        break;
+                    }
+                }
+                limitador++;
+                if (pontosBatem == false)
+                {
+                    Debug.Log("vezes tentadas antes do limite: " + limitador + "distancia: " + tempDist +"espacamento: "+TempEspacamento);
+                    break;
+                }
+                if (limitador > 1600)
+                {
+                    Debug.Log("limite vezes tentadas: " + limitador + "ultima distancia: " + tempDist + "espacamento: " + TempEspacamento);
+                    break;
+                }
+                //            Debug.Log("ta perto: " + pontosBatem);
+
+            } while (pontosBatem == true);
+
+        }
+
+        //        if (usedPoints.Contains(novapos)) getRandPoint();
+        //      foreach (GameObject limites in trabalhos)
+        //       {
+        //           if (limites.Collider.Contains(novapos)) getRandPoint();
+        //                Destroy(limites);
+        //       }
 
         return tvector;
     }

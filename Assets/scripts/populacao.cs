@@ -55,11 +55,11 @@ public class populacao: MonoBehaviour
         }
 
         vertices_individuos = "";
-
         foreach (GameObject i in individuos)
         {
 
-            vertices_individuos += (i.GetComponent<pessoa>().identidadepessoa +1)+ " \"" +   i.name.ToString() +"\"% " + i.GetComponent<pessoa>().euPessoa.minhaCasa.nomePredio + " "+ i.GetComponent<pessoa>().euPessoa.meuTrabalho.nomePredio + "\n";
+//            vertices_individuos += (i.GetComponent<pessoa>().identidadepessoa +1)+ " \"" +   i.name.ToString() +"\"% " + i.GetComponent<pessoa>().euPessoa.minhaCasa.nomePredio + " "+ i.GetComponent<pessoa>().euPessoa.meuTrabalho.nomePredio + "\n";
+        //    vertices_individuos += "%"+(i.GetComponent<pessoa>().identidadepessoa + 1) + " \"" + i.name.ToString() + "\"% " + i.GetComponent<pessoa>().euPessoa.minhaCasa.nomePredio + " " + i.GetComponent<pessoa>().euPessoa.meuTrabalho.nomePredio + "\n";
             int mx = i.GetComponent<pessoa>().identidadepessoa;
             listaC = i.GetComponent<conectados>().quemEncontrei;
             foreach(cContatos l in listaC)
@@ -70,13 +70,20 @@ public class populacao: MonoBehaviour
             }
         }
 
-        matriz_texto = "";
+        matriz_texto = ";";
 
         for (int a = 0; a < dimensao; a++)
         {
+            matriz_texto += "p" + a + ";";
+        }
+        matriz_texto += "\n";
+
+        for (int a = 0; a < dimensao; a++)
+        {
+            matriz_texto += "p"+a+";";
             for (int j = 0; j < dimensao; j++)
             {
-                matriz_texto += matriz[a, j].ToString() + " ";
+                matriz_texto += matriz[a, j].ToString() + ";";
             }
             matriz_texto += "\n";
         }
@@ -105,7 +112,48 @@ public class populacao: MonoBehaviour
     }
 
 
-    public void salvaMatriz()
+    public void salvaMatriz() //Gephy
+    {
+        //endereco do arquivo
+        string path = @"C:\Users\danie\gdrive prourb\PASTA academica\@UFRJ\doutorado\analise de redes\redes geradas gephy";
+        //        endereco = GameObject.Find("InputEndereco").GetComponent<InputField>().text;
+        path = @endereco.ToString();
+        //data para cabecalho
+        string dia = System.DateTime.Now.ToString(" dd-MM-yy HH_mm_ss ");
+        //criando o arquivo
+        string tM = GameObject.Find("Canvas").GetComponent<Mapas>().tipoMapa;
+        string tD = GameObject.Find("Terrain").GetComponent<levelgenerator>().tipoDistribuicao;
+        path += "/simulacao" + dia + " " + tM.Substring(0, 3) + " " + tD.Substring(0, 3) + ".csv";//net";
+//        File.WriteAllText(path, "% mapa: " + tM + "; distribuicao: " + tD + "; " + GameObject.Find("Terrain").GetComponent<horas>().as_hora.text + "\n");
+//        File.AppendAllText(path, "%*vertices " + individuos.Length.ToString() + "\n");
+
+        /*        
+                if (!File.Exists(path))
+                {
+                    path += "/teste" + numeroTestes + ".net";
+                    File.WriteAllText(path, "*vertices "+ individuos.Length.ToString() + "\n");
+                    numeroTestes++;
+                }
+                else
+                {
+                    path += "/teste" + numeroTestes + ".net";
+                    File.WriteAllText(path, "*vertices " + individuos.Length.ToString() + "\n");
+                    numeroTestes++;
+                }
+        */
+
+        //conteudo do arquivo ---- ja usando o q ta escrito na variavel matriz+texto
+        //cabecalho e verticies
+        File.AppendAllText(path, vertices_individuos);
+
+
+        //adicionar o conteudo no arquivo, no caso a matriz com o seu cabecalho
+//        File.AppendAllText(path, "%*matrix\n" + matriz_texto);
+        File.AppendAllText(path, matriz_texto);
+        Debug.Log("arquivo salvo: " + path);
+    }
+
+    public void salvaMatrizPajek()
     {
         //endereco do arquivo
         string path = @"C:\Users\danie\gdrive prourb\PASTA academica\@UFRJ\doutorado\analise de redes\redes geradas";
@@ -116,9 +164,9 @@ public class populacao: MonoBehaviour
         //criando o arquivo
         string tM = GameObject.Find("Canvas").GetComponent<Mapas>().tipoMapa;
         string tD = GameObject.Find("Terrain").GetComponent<levelgenerator>().tipoDistribuicao;
-        path += "/simulacao" + dia + " " + tM.Substring(0,3) + " " + tD.Substring(0,3) +".net";
+        path += "/simulacao" + dia + " " + tM.Substring(0, 3) + " " + tD.Substring(0, 3) + ".net";
         File.WriteAllText(path, "% mapa: " + tM + "; distribuicao: " + tD + "; "+ GameObject.Find("Terrain").GetComponent<horas>().as_hora.text + "\n");
-        File.AppendAllText(path, "*vertices " + individuos.Length.ToString() + "\n");
+        File.AppendAllText(path, "%*vertices " + individuos.Length.ToString() + "\n");
 
         /*        
                 if (!File.Exists(path))
