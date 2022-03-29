@@ -55,9 +55,10 @@ public class pessoa : MonoBehaviour
 
 
         jogador = this.GetComponent<NavMeshAgent>();
+        jogador.speed = 5 * geral.GetComponent<levelgenerator>().todasAsPessoas.Count;
 //        GameObject[] trabalhos = GameObject.FindGameObjectsWithTag("trabalho");
 
-//        tipoDaPessoa = tiposPessoa[Random.Range(0, tiposPessoa.Length)];
+        //        tipoDaPessoa = tiposPessoa[Random.Range(0, tiposPessoa.Length)];
         tipoDaPessoa = "jovem"; //APESAR DE EXISTIR, NAO ESTA SENDO COLOCADO EM USO
 
         casa = euPessoa.minhaCasa.enderecoXYZ;

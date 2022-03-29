@@ -18,8 +18,11 @@ public class horas : MonoBehaviour
     double temporizador = 0f;
     double tpassado = 0f;
     Texture tex;
-
+    bool listaAuto = false;
+    bool primeiraLista = false;
     public bool rodadia = true;
+
+    public Button listaRede;
 
     public void Start()
     {
@@ -32,6 +35,8 @@ public class horas : MonoBehaviour
         //       Debug.Log(DateTime.Now);
         tpassado = Time.deltaTime;
         rodadia = false;
+        listaAuto = true;
+        primeiraLista = false;
         Debug.Log("HORAS - START: inicializado RODA DIA = " +rodadia);
         Debug.Log(tempoSimulado);
 
@@ -49,9 +54,9 @@ public class horas : MonoBehaviour
               {
                   temporizador += Time.deltaTime;
             //Debug.Log("roda dia: " + rodadia);
-                    Debug.Log("intervalo " + tempoSimulado);
-                    Debug.Log("temporizador " + temporizador);
-        Debug.Log("tempo passado " + (tempoSimulado - temporizador));
+//                    Debug.Log("intervalo " + tempoSimulado);
+//                    Debug.Log("temporizador " + temporizador);
+//        Debug.Log("tempo passado " + (tempoSimulado - temporizador));
 
             if (tempoSimulado < temporizador )
             {
@@ -86,6 +91,28 @@ public class horas : MonoBehaviour
         //        as_hora.text = (hora + "h" + min.ToString("00"));
 
         as_hora.text = (dias + "d " + hora.ToString("00") + "h" + min.ToString("00"));
+
+        if (!primeiraLista && listaAuto && dias == 0 && hora == 1)
+        {
+            if (listaRede.interactable)
+            {
+                Debug.Log("lista rede na 1h da manha");
+                primeiraLista = true;
+                GameObject.Find("Canvas").GetComponent<botoes>().botaoListaRede();
+            }
+        }
+
+        if (listaAuto && dias == 7 && hora == 5)
+        {
+            if (listaRede.interactable)
+            {
+                Debug.Log("lista rede no dia 7, 5h da manha");
+                rodadia = false;
+                listaAuto = false;
+                GameObject.Find("Canvas").GetComponent<botoes>().botaoListaRede();
+            }
+        }
+
 
     }
 

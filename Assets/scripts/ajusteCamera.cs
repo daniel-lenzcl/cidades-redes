@@ -14,7 +14,7 @@ public class ajusteCamera : MonoBehaviour
     {
         terreno = GameObject.Find("Terrain");
         Vector3 centro = centroCam();
-        offset = new Vector3 (-centro.x-3, alturaCam()/2.5f, -centro.z-10);
+        offset = new Vector3(-centro.x - 3, alturaCam() / 3f, -centro.z-10);
         transform.position = centro + offset;
         transform.LookAt (centro);
         Debug.Log("centro: " + centro + " altura: " + offset);
@@ -29,7 +29,7 @@ public class ajusteCamera : MonoBehaviour
         float z = terreno.GetComponent<Terrain>().terrainData.size.z;
         if (z < x) { corda = x; } else { corda = z; }
 
-        float altura = -corda  / Mathf.Sin(30) ; 
+        float altura = (-corda  / Mathf.Sin(30)/2) ; 
         return altura ;
     }
 
