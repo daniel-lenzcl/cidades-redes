@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿///SCRIPT RESPONSAVEL POR DESCREVER A MATRIZ DE ENCONTROS E SALVAR OS ARQUIVOS DESSA MATRIZ
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
@@ -70,22 +73,26 @@ public class populacao: MonoBehaviour
             }
         }
 
-        matriz_texto = ";";
+        matriz_texto = "";
 
         for (int a = 0; a < dimensao; a++)
         {
-            matriz_texto += "p" + a + ";";
+            matriz_texto += ";p" + a;// + ";";
         }
-        matriz_texto += "\n";
+//        matriz_texto += "\n";
 
         for (int a = 0; a < dimensao; a++)
         {
-            matriz_texto += "p"+a+";";
+            matriz_texto += "\np" + a;// +";";
             for (int j = 0; j < dimensao; j++)
             {
-                matriz_texto += matriz[a, j].ToString() + ";";
+                if(a == j)
+                {
+                    matriz[a, j] = 1;       //PREENCHENDO DIAGONAL PARA GEPHY RECONHECER OS NODES SEM CONTATO
+                }
+                    matriz_texto += ";" + matriz[a, j].ToString();// + ";";
             }
-            matriz_texto += "\n";
+//            matriz_texto += "\n";
         }
         Debug.Log("matriz de encontros: \n"+ matriz_texto);
 
