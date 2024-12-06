@@ -652,10 +652,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: 5ce2d6ba-b71b-4abf-ad7c-c8e98ee60f42
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: cidades-redes
+  organizationId: unity_lo8n5tgjm1qgla
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0
