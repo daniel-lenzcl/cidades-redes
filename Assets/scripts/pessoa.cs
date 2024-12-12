@@ -100,7 +100,7 @@ public class pessoa : MonoBehaviour
                     switch (tempo)
                         {
                             //private string[] dest = { "jardins", "alameda", "fonteLinear", "fonteCircular", "fonteFemininas", "coreto", "plataforma" };
-                            case 6:
+                            case 2:
                                 destino = trabalho;
 //                                sdest = "trabalho";
                                 break;

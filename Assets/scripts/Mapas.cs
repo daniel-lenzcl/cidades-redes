@@ -23,6 +23,7 @@ public class Mapas : MonoBehaviour
             "continuo",
             "alternado", ///precisara ser implementado qd se colocar um 3o destino
             "aleatorio",
+            "importar mapa",
         };
         var drpDistribuicao = GameObject.Find("DdDISTRIBUICAO").GetComponent<Dropdown>();
         drpDistribuicao.options.Clear();

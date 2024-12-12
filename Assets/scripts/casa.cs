@@ -24,7 +24,7 @@ public class casa : MonoBehaviour
         //        Debug.Log("populacao total: " + tpop + " criancas: " + criancas);
 
         maxPessoas = geral.GetComponent<levelgenerator>().maxPessoasI;
-
+//        maxPessoas = 3;
 
         Vector3 endereco = this.transform.position;
         int pnc = (int) Random.Range(1, maxPessoas+1);
@@ -59,10 +59,4 @@ public class casa : MonoBehaviour
 
     }
 
-    // Update is called once per frame
- /*   void Update()
-    {
-        
-    }
-*/
 }

@@ -327,6 +327,13 @@ public class levelgenerator : MonoBehaviour
 //                    Debug.Log("LEVEL COLOCA PREDIOS - Mathf.Max: " + Mathf.Max(propC, propT) + "controlePredio: " + controlePredio);
                 }
                 break;
+            case "importar mapa":
+                GameObject canvas = GameObject.Find("Canvas");
+                canvas.GetComponent<CarregarMapa>().captura();
+                
+
+                break;
+
         }
         foreach (Predios p in predios)
         {
@@ -373,9 +380,7 @@ public class levelgenerator : MonoBehaviour
 
     void GenerateObjects(GameObject go, int amount)
     {
-
         //        Debug.Log("LEVEL - GENERATE OBJECTS: total de enderecos no comeco: " + enderecos.Count);
-
         if (go == null) return;
         col = terrain.GetComponent<TerrainCollider>();
 
